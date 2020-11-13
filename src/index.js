@@ -1,7 +1,10 @@
 // ./src/index.js
 import { ApolloServer } from 'apollo-server';
+
 import schema from './schema';
 import databaseClient from './databaseClient';
+import dataSources from './dataSources';
+
 import logger from './__debugger__';
 
 export default function(config) {
@@ -23,7 +26,11 @@ export default function(config) {
 }
 
 async function server(port) {
-      const app = new ApolloServer({ ...schema });
+      const db = databaseClient.getDB(),
+            app = new ApolloServer({
+              ...schema,
+              dataSources: () => dataSources(db)
+            });
 
       app.listen({ port })
          .then( ({url}) => {

@@ -1,14 +1,14 @@
 // ./src/schema/_resolvers.js
 export default {
   Query: {
-    internal: () => {
-      return console.log('in internal')
+    internal: (_, __, { dataSources }) => {
+      return dataSources.internalArticles.getAll({}, {limit: 100})
     },
-    external: () => {
-      return console.log('in external')
+    external: (_, __, { dataSources }) => {
+      return dataSources.externalArticles.getAll({}, {limit: 100})
     },
-    activeUser: () => {
-      return console.log('in users')
+    activeUser: (_, __, { dataSources }) => {
+      return dataSources.users.getAll({}, {limit: 100})
     }
   }
 }
