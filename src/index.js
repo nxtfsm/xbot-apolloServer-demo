@@ -5,13 +5,14 @@ import schema from './schema';
 import databaseClient from './databaseClient';
 import logger from './__debugger__';
 
-const debugging = process.env.NODE_ENV;
+const debugging = process.env.NODE_ENV,
+      mongoURI = process.env.MONGODB_URI;
 
 const server = async () => {
       const port = process.env.PORT,
             app = new ApolloServer({ ...schema });
 
-      app.listen({ port: process.env.PORT })
+      app.listen({ port })
          .then( ({url}) => {
            const msg = `🚀 Server ready at ${url}`
            logger(msg)
@@ -19,18 +20,12 @@ const server = async () => {
 
 }
 
-databaseClient.connect()
+databaseClient.connect(mongoURI)
   .then((res) => {
-      if (debugging) {
-        const msg = `Remote Connection Status: ${res}`
-        logger(msg)
-        }
-      server()
+      !!debugging ? logger(res) : null;
+      server();
     })
   .catch((res) => {
-      if (debugging) {
-        const msg = `Remote Connection Status: ${res}`
-        logger(msg)
-        }
-      process.exit()
-    })
+      logger(res);
+      process.exit();
+    });
