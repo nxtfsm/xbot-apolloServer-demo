@@ -1,10 +1,8 @@
 // ./src/index.js
 import { ApolloServer } from 'apollo-server';
-
 import schema from './schema';
 import databaseClient from './databaseClient';
 import dataSources from './dataSources';
-
 import logger from './__debugger__';
 
 export default async function(config) {

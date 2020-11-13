@@ -1,11 +1,15 @@
-// ./src/databaseClient/_databaseClient.js
+// ./src/databaseClient/_mongoClient.js
 import { MongoClient } from 'mongodb';
 
+const logRoot = 'Remote Connection Status: '
 let mongoDB;
 
-export function connect(mongoUri) {
-  const logRoot = 'Remote Connection Status: '
+export default {
+  connect: (uri) => __connect(uri),
+  getDB: () => __getDB()
+}
 
+function __connect(mongoUri) {
   return new Promise((resolve, reject) => {
     MongoClient.connect(
             mongoUri,
@@ -24,4 +28,4 @@ export function connect(mongoUri) {
   })
 }
 
-export const getDB = () => mongoDB
+function __getDB() { return mongoDB }
