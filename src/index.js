@@ -6,16 +6,11 @@ import dataSources from './dataSources';
 import logger from './__debugger__';
 
 export default async function(config) {
-  const {
-    port,
-    remoteURI,
-    debugging
-  } = config;
-
-  const server = new ApolloServer({
-    ...schema,
-    dataSources: () => dataSources( databaseClient.getDB() )
-  });
+  const { port, remoteURI, debugging } = config,
+        server = new ApolloServer({
+          ...schema,
+          dataSources: () => dataSources( databaseClient.getDB() )
+        });
 
   server.listen({ port })
      .then(( {url} ) => {

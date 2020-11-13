@@ -18,13 +18,13 @@ function __connect(mongoUri) {
               if (err) {
                 const logStr = `${logRoot} Connection failed with err: ${err}`
                 reject(logStr)
-              } else {
+                }
+              else {
                 mongoDB = client.db('xbotDemo')
                 const logStr = `${logRoot} xbotDemo mongoDB Connected`
                 resolve(logStr)
-              }
-            });
-
+                }
+              });
   })
 }
 
