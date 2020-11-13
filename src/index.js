@@ -1,16 +1,29 @@
 // ./src/index.js
-import 'dotenv/config';
 import { ApolloServer } from 'apollo-server';
 import schema from './schema';
 import databaseClient from './databaseClient';
 import logger from './__debugger__';
 
-const debugging = process.env.NODE_ENV,
-      mongoURI = process.env.MONGODB_URI;
+export default function(config) {
+  const {
+    remoteURI,
+    onPort,
+    debugging
+  } = config;
 
-const server = async () => {
-      const port = process.env.PORT,
-            app = new ApolloServer({ ...schema });
+  databaseClient.connect(remoteURI)
+    .then((res) => {
+        !!debugging ? logger(res) : null;
+        server(onPort);
+      })
+    .catch((res) => {
+        logger(res);
+        process.exit();
+      });
+}
+
+async function server(port) {
+      const app = new ApolloServer({ ...schema });
 
       app.listen({ port })
          .then( ({url}) => {
@@ -19,13 +32,3 @@ const server = async () => {
           });
 
 }
-
-databaseClient.connect(mongoURI)
-  .then((res) => {
-      !!debugging ? logger(res) : null;
-      server();
-    })
-  .catch((res) => {
-      logger(res);
-      process.exit();
-    });
