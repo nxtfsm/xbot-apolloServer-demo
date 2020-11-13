@@ -7,35 +7,29 @@ import dataSources from './dataSources';
 
 import logger from './__debugger__';
 
-export default function(config) {
+export default async function(config) {
   const {
+    port,
     remoteURI,
-    onPort,
     debugging
   } = config;
 
-  databaseClient.connect(remoteURI)
-    .then((res) => {
-        !!debugging ? logger(res) : logger();
-        server(onPort);
-      })
-    .catch((res) => {
-        logger(res);
-        process.exit();
-      });
-}
+  const server = new ApolloServer({
+    ...schema,
+    dataSources: () => dataSources( databaseClient.getDB() )
+  });
 
-async function server(port) {
-      const db = databaseClient.getDB(),
-            app = new ApolloServer({
-              ...schema,
-              dataSources: () => dataSources(db)
-            });
-
-      app.listen({ port })
-         .then( ({url}) => {
-           const msg = `🚀 Server ready at ${url}`
-           logger(msg)
-          });
-
+  server.listen({ port })
+     .then(( {url} ) => {
+       databaseClient.connect(remoteURI)
+        .then((res) => {
+            const activeMsg = `🚀 Server ready at ${url}`;
+            !!debugging ? logger(res) : logger();
+            logger(activeMsg);
+          })
+        .catch((res) => {
+          logger(res);
+          process.exit();
+        })
+     })
 }
