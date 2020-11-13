@@ -13,7 +13,7 @@ export default function(config) {
 
   databaseClient.connect(remoteURI)
     .then((res) => {
-        !!debugging ? logger(res) : null;
+        !!debugging ? logger(res) : logger();
         server(onPort);
       })
     .catch((res) => {
