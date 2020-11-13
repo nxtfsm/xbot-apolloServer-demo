@@ -1,14 +1,31 @@
 // ./src/schema/_resolvers.js
 export default {
   Query: {
-    internal: (_, __, { dataSources }) => {
-      return dataSources.internalArticles.getAll({}, {limit: 100})
-    },
-    external: (_, __, { dataSources }) => {
-      return dataSources.externalArticles.getAll({}, {limit: 100})
-    },
-    activeUser: (_, __, { dataSources }) => {
-      return dataSources.users.getAll({}, {limit: 100})
+    internalTutorials: async (_, args={ title, contents, postedBy },
+      { dataSources }) => {
+        const query = await queryConstructor(args)
+        return dataSources.internalArticles.getAll(query, {})
+      },
+    externalTutorials: async (_, args={ title, contents, postedBy },
+      { dataSources }) => {
+        const query = await queryConstructor(args)
+        return dataSources.externalArticles.getAll({}, {})
+      },
+    activeUser: (_, { atXavierAccount }, { dataSources }) => {
+        const query = { atXavierAccount: atXavierAccount }
+        return dataSources.users.findActive(query, {})
     }
   }
+}
+
+function queryConstructor(args) {
+  const query = {};
+
+  Object.entries(args).map(([key, value]) => {
+    if (value) {
+      query[key] = value
+    }
+  });
+
+  return query
 }

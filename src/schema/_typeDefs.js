@@ -20,8 +20,16 @@ export default gql`
   }
 
   type Query {
-    internal: [Article]!
-    external: [Article]!
-    activeUser: User
+    internalTutorials(
+      title: String
+      content: String
+      postedBy: ID
+    ): [Article]!
+    externalTutorials(
+      title: String
+      content: String
+      postedBy: ID
+    ): [Article]!
+    activeUser( atXavierAccount: String! ): User
   }
 `
