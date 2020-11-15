@@ -4,8 +4,10 @@ import Article from './_Article';
 import User from './_User';
 import UpdateResponse from './_UpdateResponse';
 
-export default gql`
-  ${Article}
-  ${User}
-  ${UpdateResponse}
+export default function() {
+  return gql`
+    ${Article}
+    ${User}
+    ${UpdateResponse}
 `
+}
