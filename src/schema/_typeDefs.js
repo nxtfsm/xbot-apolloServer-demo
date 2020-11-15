@@ -1,5 +1,7 @@
 // ./src/schema/_typeDefs.js
 import { gql } from 'apollo-server';
+import Query from './queries';
+import Mutation from './mutations'
 
 export default gql`
   type Article {
@@ -19,17 +21,14 @@ export default gql`
     isEditor: Boolean
   }
 
-  type Query {
-    internalTutorials(
-      title: String
-      content: String
-      postedBy: ID
-    ): [Article]!
-    externalTutorials(
-      title: String
-      content: String
-      postedBy: ID
-    ): [Article]!
-    activeUser( atXavierAccount: String! ): User
+  type UpdateResponse {
+    successStatus: Boolean
+    message: String
+    updatedArticle: Article
+    updatedUser: User
   }
+
+  ${Query}
+
+  ${Mutation}
 `
