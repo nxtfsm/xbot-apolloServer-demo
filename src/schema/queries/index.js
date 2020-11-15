@@ -1,4 +1,4 @@
-// ./src/schema/_RootQuery.js
+// ./src/schema/queries/index.js
 import { gql } from 'apollo-server';
 
 export default gql`
