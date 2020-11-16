@@ -16,7 +16,7 @@ export default async function(config) {
      .then(( {url} ) => {
        databaseClient.connect(remoteURI)
         .then((res) => {
-            const activeMsg = `🚀 Server ready at ${url}`;
+            const activeMsg = `🖖 Server ready at ${url}`;
             !!debugging ? logger(res) : logger();
             logger(activeMsg);
           })

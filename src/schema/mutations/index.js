@@ -3,15 +3,8 @@ import { gql } from 'apollo-server';
 
 export default gql`
   type Mutation {
-    createInternalTutorial(
-      title: String!
-      externalUrl: String
-      summary: String
-      content: String
-      postedBy: ID
-    ): Article
-
-    createExternalTutorial(
+    createTutorial(
+      internalOrigin: Boolean!
       title: String!
       externalUrl: String
       summary: String
