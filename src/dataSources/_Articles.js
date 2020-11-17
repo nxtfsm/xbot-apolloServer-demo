@@ -11,7 +11,6 @@ export default class Articles extends MongoDataSource {
      this.collection.insertOne(doc, opts,
        (err, result) => {
         if (err) {
-           console.log(err)
            reject(err)
           }
         resolve(result.ops[0])

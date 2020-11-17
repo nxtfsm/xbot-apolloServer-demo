@@ -15,14 +15,16 @@ export default async function(config) {
   server.listen({ port })
      .then(( {url} ) => {
        databaseClient.connect(remoteURI)
-        .then((res) => {
+        .then((res, rej) => {
             const activeMsg = `🖖 Server ready at ${url}`;
-            !!debugging ? logger(res) : logger();
+            !!debugging ? logger({'info' : res}) : logger();
             logger(activeMsg);
           })
-        .catch((res) => {
-          logger(res);
+        .catch((rej) => {
+          logger({'err' : rej});
           process.exit();
         })
      })
 }
+
+export { logger }

@@ -16,12 +16,12 @@ export default function logger(msg) {
   function switchObj() {
     try {
       Object.keys(msg).map(key => {
-        if (key === 'dir') { console.dir( msg[key] )}
-        else { throw 'err' }
+        if (key === 'info') { console.info( msg[key] )}
+        if (key === 'err') { console.error( msg[key] )}
       })
     }
-    catch {
-      console.log(`switchObj didn't know how to handle this obj: ${msg}`)
+    catch(err) {
+      console.log(`switchObj didn't know how to handle this obj: ${err}`)
     }
   }
 

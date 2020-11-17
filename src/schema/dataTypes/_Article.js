@@ -10,4 +10,19 @@ export default gql`
     content: String
     postedBy: User
   }
+
+  type UpdatedArticlePayload {
+    articles: [Article]
+  }
+
+  input ArticleInput {
+    internalOrigin: Boolean!
+    title: String
+    externalUrl: String
+    summary: String
+    content: String
+    postedBy: ID
+  }
+
+
 `

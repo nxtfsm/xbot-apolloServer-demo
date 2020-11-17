@@ -4,13 +4,12 @@ import { gql } from 'apollo-server';
 export default gql`
   type Mutation {
     createTutorial(
-      internalOrigin: Boolean!
-      title: String!
-      externalUrl: String
-      summary: String
-      content: String
-      postedBy: ID
-    ): Article
+      input: ArticleInput!
+    ): UpdatedArticlePayload
+
+    updateTutorial(
+      input: ArticleInput!
+    ): UpdatedArticlePayload
 
     updateInternalTutorial(
       _id: ID!

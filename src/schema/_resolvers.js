@@ -1,14 +1,17 @@
 // ./src/schema/_resolvers.js
+import { logger } from '../'
+
 export default {
   Query: {
-    tutorials: async (_, args={
-        internalOrigin, title, externalUrl, content, summary, postedBy
-      }, { dataSources }) => {
-        const input = await __inputConstructor(args);
-        return !!args.internalOrigin
-                ? dataSources.internalArticles.getAll(input, {})
-                : dataSources.externalArticles.getAll(input, {})
-              },
+    tutorials: async (parent, { input }, { dataSources }) => {
+        const args = await __inputConstructor(input);
+        return {
+          collection: !! input.internalOrigin ? 'internal' : 'external',
+          articles: !!input.internalOrigin
+              ? dataSources.internalArticles.getAll(args, {})
+              : dataSources.externalArticles.getAll(args, {})
+            }
+          },
 
     activeUser: (_, { atXavierAccount }, { dataSources }) => {
         const query = { atXavierAccount: atXavierAccount }
@@ -17,27 +20,29 @@ export default {
   },
 
   Mutation: {
-    createTutorial: async (_, args={
-      internalOrigin, title, externalUrl, content, summary, postedBy
-    }, { dataSources }) => {
-      const input = await __inputConstructor(args);
-      return !!args.internalOrigin
-              ? dataSources.internalArticles.createNew(input, {})
+    createTutorial: async (_, { input }, { dataSources }) => {
+      const args = await __inputConstructor(input);
+      return !!input.internalOrigin
+              ? dataSources.internalArticles.createNew(args, {})
                   .then((result) => result)
-                  .catch((result) => null)
+                  .catch((result) => {
+                    logger({'err': result})
+                    return null
+                  })
               : dataSources.externalArticles.createNew(input, {})
                   .then((result) => result)
-                  .catch((result) => null)
-    }
+                  .catch((result) => {
+                    logger({'err': result})
+                    null
+                  })
+    },
 
-    /*updateTutorial: async (origin, args={
-      internalOrigin, title, externalUrl, content, summary, postedBy
-    }, { dataSources }) => {
+    updateTutorial: async (origin, { input }, { dataSources }) => {
       const doc = await __docConstructor(args);
       if (args.internalOrigin) {
 
       }
-    }*/
+    }
   }
 }
 
