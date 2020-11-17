@@ -1,26 +1,27 @@
 // ./src/schema/_resolvers.js
 export default {
   Query: {
-    internalTutorials: async (_, args={ title, contents, postedBy },
-      { dataSources }) => {
-        const doc = await docConstructor(args)
+    tutorials: async(_, args={
+      internalOrigin, title, externalUrl, content, summary, postedBy
+    }, { dataSources }) => {
+      const doc = await __docConstructor(args);
+      if (args.internalOrigin) {
         return dataSources.internalArticles.getAll(doc, {})
-      },
-    externalTutorials: async (_, args={ title, contents, postedBy },
-      { dataSources }) => {
-        const doc = await docConstructor(args)
+      } else {
         return dataSources.externalArticles.getAll(doc, {})
-      },
+      }
+    },
     activeUser: (_, { atXavierAccount }, { dataSources }) => {
         const query = { atXavierAccount: atXavierAccount }
         return dataSources.users.findActive(query, {})
     }
   },
+
   Mutation: {
     createTutorial: async (origin, args={
       internalOrigin, title, externalUrl, content, summary, postedBy
     }, {dataSources}) => {
-      const doc = await docConstructor(args);
+      const doc = await __docConstructor(args);
       if (args.internalOrigin) {
         return dataSources.internalArticles.createNew(doc, {})
                 .then((result) => result)
@@ -34,8 +35,7 @@ export default {
   }
 }
 
-function docConstructor(args) {
-  console.log(args)
+function __docConstructor(args) {
   const docArgs = {};
 
   Object.entries(args).map(([key, value]) => {

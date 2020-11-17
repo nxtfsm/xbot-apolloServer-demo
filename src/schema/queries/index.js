@@ -3,18 +3,13 @@ import { gql } from 'apollo-server';
 
 export default gql`
 type Query {
-  internalTutorials(
+  tutorials(
+    internalOrigin: Boolean!
     title: String
     content: String
     postedBy: ID
   ): [Article]!
-
-  externalTutorials(
-    title: String
-    content: String
-    postedBy: ID
-  ): [Article]!
-
+  
   activeUser( atXavierAccount: String! ): User
 }
 `
