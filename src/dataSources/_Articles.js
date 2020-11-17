@@ -1,7 +1,7 @@
-// ./src/dataSources/_Internal.js
+// ./src/dataSources/_External.js
 import { MongoDataSource } from 'apollo-datasource-mongodb';
 
-export default class Internal extends MongoDataSource {
+export default class Articles extends MongoDataSource {
   async getAll(query, opts) {
     return await this.collection.find(query, opts).toArray()
   }
@@ -18,5 +18,4 @@ export default class Internal extends MongoDataSource {
       })
     })
   }
-
 }

@@ -1,16 +1,15 @@
 // ./src/schema/_resolvers.js
 export default {
   Query: {
-    tutorials: async(_, args={
-      internalOrigin, title, externalUrl, content, summary, postedBy
-    }, { dataSources }) => {
-      const doc = await __docConstructor(args);
-      if (args.internalOrigin) {
-        return dataSources.internalArticles.getAll(doc, {})
-      } else {
-        return dataSources.externalArticles.getAll(doc, {})
-      }
-    },
+    tutorials: async (_, args={
+        internalOrigin, title, externalUrl, content, summary, postedBy
+      }, { dataSources }) => {
+        const input = await __inputConstructor(args);
+        return !!args.internalOrigin
+                ? dataSources.internalArticles.getAll(input, {})
+                : dataSources.externalArticles.getAll(input, {})
+              },
+
     activeUser: (_, { atXavierAccount }, { dataSources }) => {
         const query = { atXavierAccount: atXavierAccount }
         return dataSources.users.findActive(query, {})
@@ -18,24 +17,31 @@ export default {
   },
 
   Mutation: {
-    createTutorial: async (origin, args={
+    createTutorial: async (_, args={
       internalOrigin, title, externalUrl, content, summary, postedBy
-    }, {dataSources}) => {
+    }, { dataSources }) => {
+      const input = await __inputConstructor(args);
+      return !!args.internalOrigin
+              ? dataSources.internalArticles.createNew(input, {})
+                  .then((result) => result)
+                  .catch((result) => null)
+              : dataSources.externalArticles.createNew(input, {})
+                  .then((result) => result)
+                  .catch((result) => null)
+    }
+
+    /*updateTutorial: async (origin, args={
+      internalOrigin, title, externalUrl, content, summary, postedBy
+    }, { dataSources }) => {
       const doc = await __docConstructor(args);
       if (args.internalOrigin) {
-        return dataSources.internalArticles.createNew(doc, {})
-                .then((result) => result)
-                .catch((result) => null)
-        } else {
-        return dataSources.externalArticles.createNew(doc, {})
-                .then((result) => result)
-                .catch((result) => null)
-        }
-    }
+
+      }
+    }*/
   }
 }
 
-function __docConstructor(args) {
+function __inputConstructor(args) {
   const docArgs = {};
 
   Object.entries(args).map(([key, value]) => {

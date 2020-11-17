@@ -9,7 +9,7 @@ type Query {
     content: String
     postedBy: ID
   ): [Article]!
-  
+
   activeUser( atXavierAccount: String! ): User
 }
 `
