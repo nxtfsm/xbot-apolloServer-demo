@@ -24,5 +24,11 @@ export default gql`
     postedBy: ID
   }
 
-
+  input UpdateArticle {
+    title: String
+    externalUrl: String
+    summary: String
+    content: String
+    modifiedBy: ID
+  }
 `

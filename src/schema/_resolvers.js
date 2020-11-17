@@ -4,14 +4,16 @@ import { logger } from '../'
 export default {
   Query: {
     tutorials: async (parent, { input }, { dataSources }) => {
-        const args = await __inputConstructor(input);
-        return {
-          collection: !! input.internalOrigin ? 'internal' : 'external',
-          articles: !!input.internalOrigin
-              ? dataSources.internalArticles.getAll(args, {})
-              : dataSources.externalArticles.getAll(args, {})
-            }
-          },
+      const {
+        collection,
+        query
+      } = await __queryConstructor(input, dataSources);
+
+      return {
+        collection,
+        articles: query()
+        }
+      },
 
     activeUser: (_, { atXavierAccount }, { dataSources }) => {
         const query = { atXavierAccount: atXavierAccount }
@@ -22,32 +24,25 @@ export default {
   Mutation: {
     createTutorial: async (_, { input }, { dataSources }) => {
       const { create } = __mutationConstructor(input, dataSources);
-      return await create()
+      return await create();
     },
 
-    updateTutorial: async (origin, { input }, { dataSources }) => {
-      const { update } = __mutationConstructor(input, dataSources);
-
+    updateTutorial: async (_, { input, newValues }, { dataSources }) => {
+      const { update } = __mutationConstructor(input, dataSources, newValues);
+      return await update();
     }
   }
 }
 
-function __mutationConstructor(input, dataSources) {
+function __queryConstructor(input, dataSources) {
   const args = __inputConstructor(input);
   dataSources.inCollection = !!input.internalOrigin
         ? dataSources.internalArticles
         : dataSources.externalArticles;
-
   return {
-    create: () => dataSources.inCollection.createNew(args, {})
-                    .then((result) => {
-                      return { successStatus: true, updatedArticle: result };
-                    })
-                    .catch((result) => {
-                      logger({'err': result})
-                      return { successStatus: false, updatedArticle: null };
-                    }),
-    update: () => console.log('updater goes here')
+    args,
+    collection: !!input.internalOrigin ? 'internal' : 'external',
+    query: () => dataSources.inCollection.getAll(args)
   }
 }
 
@@ -61,4 +56,34 @@ function __inputConstructor(input) {
   });
 
   return args
+}
+
+function __mutationConstructor(input, dataSources, newValues={}) {
+  const { args } = __queryConstructor(input, dataSources);
+
+  return {
+    create: () => dataSources.inCollection.createNew(args, {})
+                    .then((result) => {
+                      return { successStatus: true, updatedArticle: result };
+                    })
+                    .catch((result) => {
+                      logger({'err': result})
+                      return { successStatus: false, updatedArticle: null };
+                    }),
+    update: async () => {
+              const doc = { $set: { ...newValues } };
+              const response = await dataSources.inCollection
+                                            .findOneAndUpdate(args, doc);
+
+              const successStatus = !!response;
+              const responseMsg = !!successStatus
+                            ? `updated article: ${ response._id }`
+                            : 'no articles updated';
+              return {
+                successStatus,
+                updatedArticle: response,
+                message: responseMsg
+              }
+    }
+  }
 }

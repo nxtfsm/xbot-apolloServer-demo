@@ -2,7 +2,7 @@
 import { MongoDataSource } from 'apollo-datasource-mongodb';
 
 export default class Articles extends MongoDataSource {
-  async getAll(query, opts) {
+  async getAll(query, opts={}) {
     return await this.collection.find(query, opts).toArray()
   }
 
@@ -17,4 +17,12 @@ export default class Articles extends MongoDataSource {
       })
     })
   }
+
+  async findOneAndUpdate(filter, update, opts={}) {
+    opts.returnOriginal = false;
+
+    const res = await this.collection.findOneAndUpdate(filter, update, opts);
+    return res.value;
+}
+
 }

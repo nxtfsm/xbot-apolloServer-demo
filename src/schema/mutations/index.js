@@ -9,6 +9,7 @@ export default gql`
 
     updateTutorial(
       input: ArticleInput!
+      newValues: UpdateArticle
     ): UpdateResponse
 
     deleteTutorial(
