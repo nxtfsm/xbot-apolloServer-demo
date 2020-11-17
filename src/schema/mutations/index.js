@@ -5,55 +5,33 @@ export default gql`
   type Mutation {
     createTutorial(
       input: ArticleInput!
-    ): UpdatedArticlePayload
+    ): UpdateResponse
 
     updateTutorial(
       input: ArticleInput!
-    ): UpdatedArticlePayload
+    ): UpdateResponse
 
-    updateInternalTutorial(
-      _id: ID!
-      title: String
-      externalUrl: String
-      summary: String
-      content: String
-      postedBy: ID
-    ): String
-
-    updateExternalTutorial(
-      _id: ID!
-      title: String
-      externalUrl: String
-      summary: String
-      content: String
-      postedBy: ID
-    ): String
-
-    deleteInternalTutorial(
-      _id: ID!
-    ): String
-
-    deleteExternalTutorial(
-      _id: ID!
-    ): String
+    deleteTutorial(
+      input: ArticleInput!
+    ): UpdateResponse
 
     createUser(
       atXavierAccount: String!
       firstName: String
       familyName: String
       isEditor: Boolean
-    ): User
+    ): UpdateResponse
 
     updateUser(
       atXavierAccount: String!
       firstName: String
       familyName: String
       isEditor: Boolean
-    ): String
+    ): UpdateResponse
 
     deleteUser(
       _id: ID!
-    ): String
+    ): UpdateResponse
 
   }
 `

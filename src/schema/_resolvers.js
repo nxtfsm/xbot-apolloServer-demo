@@ -21,39 +21,44 @@ export default {
 
   Mutation: {
     createTutorial: async (_, { input }, { dataSources }) => {
-      const args = await __inputConstructor(input);
-      return !!input.internalOrigin
-              ? dataSources.internalArticles.createNew(args, {})
-                  .then((result) => result)
-                  .catch((result) => {
-                    logger({'err': result})
-                    return null
-                  })
-              : dataSources.externalArticles.createNew(input, {})
-                  .then((result) => result)
-                  .catch((result) => {
-                    logger({'err': result})
-                    null
-                  })
+      const { create } = __mutationConstructor(input, dataSources);
+      return await create()
     },
 
     updateTutorial: async (origin, { input }, { dataSources }) => {
-      const doc = await __docConstructor(args);
-      if (args.internalOrigin) {
+      const { update } = __mutationConstructor(input, dataSources);
 
-      }
     }
   }
 }
 
-function __inputConstructor(args) {
-  const docArgs = {};
+function __mutationConstructor(input, dataSources) {
+  const args = __inputConstructor(input);
+  dataSources.inCollection = !!input.internalOrigin
+        ? dataSources.internalArticles
+        : dataSources.externalArticles;
 
-  Object.entries(args).map(([key, value]) => {
+  return {
+    create: () => dataSources.inCollection.createNew(args, {})
+                    .then((result) => {
+                      return { successStatus: true, updatedArticle: result };
+                    })
+                    .catch((result) => {
+                      logger({'err': result})
+                      return { successStatus: false, updatedArticle: null };
+                    }),
+    update: () => console.log('updater goes here')
+  }
+}
+
+function __inputConstructor(input) {
+  const args = {};
+
+  Object.entries(input).map(([key, value]) => {
     if (value && key !== 'internalOrigin') {
-      docArgs[key] = value
+      args[key] = value
     }
   });
 
-  return docArgs
+  return args
 }
