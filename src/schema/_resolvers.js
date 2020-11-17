@@ -23,46 +23,28 @@ export default {
 
   Mutation: {
     createTutorial: async (_, { input }, { dataSources }) => {
-      const { create } = __mutationConstructor(input, dataSources);
-      return await create();
+      const { create } = await __mutationConstructor(input, dataSources);
+      return create();
     },
 
     updateTutorial: async (_, { input, newValues }, { dataSources }) => {
-      const { update } = __mutationConstructor(input, dataSources, newValues);
-      return await update();
+      const { update } = await __mutationConstructor(
+        input, dataSources, newValues);
+      return update();
+    },
+
+    deleteTutorial: async (_, { input }, { dataSources }) => {
+      const { deleteOne } = await __mutationConstructor(input, dataSources);
+      return deleteOne();
     }
   }
 }
 
-function __queryConstructor(input, dataSources) {
-  const args = __inputConstructor(input);
-  dataSources.inCollection = !!input.internalOrigin
-        ? dataSources.internalArticles
-        : dataSources.externalArticles;
-  return {
-    args,
-    collection: !!input.internalOrigin ? 'internal' : 'external',
-    query: () => dataSources.inCollection.getAll(args)
-  }
-}
-
-function __inputConstructor(input) {
-  const args = {};
-
-  Object.entries(input).map(([key, value]) => {
-    if (value && key !== 'internalOrigin') {
-      args[key] = value
-    }
-  });
-
-  return args
-}
-
-function __mutationConstructor(input, dataSources, newValues={}) {
-  const { args } = __queryConstructor(input, dataSources);
+async function __mutationConstructor(input, dataSources, newValues={}) {
+  const { args } = await __queryConstructor(input, dataSources);
 
   return {
-    create: () => dataSources.inCollection.createNew(args, {})
+    create: () => dataSources.inCollection.createNew(args)
                     .then((result) => {
                       return { successStatus: true, updatedArticle: result };
                     })
@@ -84,6 +66,37 @@ function __mutationConstructor(input, dataSources, newValues={}) {
                 updatedArticle: response,
                 message: responseMsg
               }
+            },
+    deleteOne: async () => {
+        const result = await dataSources.inCollection.findOneAndDelete(args)
+        return {
+          successStatus: result === 1 ? true : false,
+          message: `article deleted`
+        }
     }
   }
+}
+
+async function __queryConstructor(input, dataSources) {
+  const args = await __inputConstructor(input);
+  dataSources.inCollection = !!input.internalOrigin
+        ? dataSources.internalArticles
+        : dataSources.externalArticles;
+  return {
+    args,
+    collection: !!input.internalOrigin ? 'internal' : 'external',
+    query: () => dataSources.inCollection.getAll(args)
+  }
+}
+
+function __inputConstructor(input) {
+  const args = {};
+
+  Object.entries(input).map(([key, value]) => {
+    if (value && key !== 'internalOrigin') {
+      args[key] = value
+    }
+  });
+
+  return args
 }

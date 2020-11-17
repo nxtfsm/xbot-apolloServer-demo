@@ -6,7 +6,7 @@ export default class Articles extends MongoDataSource {
     return await this.collection.find(query, opts).toArray()
   }
 
-  createNew(doc, opts) {
+  createNew(doc, opts={}) {
     return new Promise((resolve, reject) => {
      this.collection.insertOne(doc, opts,
        (err, result) => {
@@ -23,6 +23,11 @@ export default class Articles extends MongoDataSource {
 
     const res = await this.collection.findOneAndUpdate(filter, update, opts);
     return res.value;
-}
+  }
+
+  async findOneAndDelete(filter, opts={}) {
+    const res = await this.collection.findOneAndDelete(filter, opts);
+    return res.ok;
+  }
 
 }
