@@ -1,4 +1,4 @@
-// ./src/schema/resolvers/__inputConstructor.js
+// ./src/schema/resolverConstructor/_inputReducer.js
 export default function(input) {
   const args = {};
 

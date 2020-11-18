@@ -1,8 +1,9 @@
-// ./src/schema/resolvers/_mutationConstructor.js
-import { queryTutorialsConstructor } from './_queryConstructor';
+// ./src/schema/resolverConstructor/_mutationConstructor.js
+import queryConstructor from './_queryConstructor';
 
 export default async function(input, dataSources, newValues = {}) {
-  const { args } = await queryTutorialsConstructor(input, dataSources);
+  const { getTutorials } = queryConstructor(input, dataSources);
+  const { args } = await getTutorials();
   const doc = { $set: { ...newValues} };
 
   return {

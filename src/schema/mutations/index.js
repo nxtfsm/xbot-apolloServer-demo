@@ -36,13 +36,3 @@ export default gql`
 
   }
 `;
-
-/*
-updateTutorial {
-  internalOrigin: Boolean!
-  title: String
-  externalUrl: String
-  summary: String
-  content: String
-  postedBy: ID
-}*/

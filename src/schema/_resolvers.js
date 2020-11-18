@@ -4,17 +4,11 @@ import constructor from './resolverConstructor';
 export default {
   Query: {
     tutorials: async(parent, { input }, { dataSources }) => {
-      const {
-        collection,
-        query,
-      } = await constructor.query.tutorials(input, dataSources);
-
-      return { collection, articles: query() };
+      return await constructor.query.tutorials(input, dataSources);
     },
 
     activeUser: async(_, { input }, { dataSources }) => {
-      const query = await constructor.query.activeUser(input, dataSources);
-      return { updatedUser: query() };
+      return await constructor.query.activeUser(input, dataSources);
     },
   },
 

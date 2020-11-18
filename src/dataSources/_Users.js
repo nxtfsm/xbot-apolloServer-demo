@@ -2,7 +2,7 @@
 import { MongoDataSource } from 'apollo-datasource-mongodb';
 
 export default class Users extends MongoDataSource {
-  async findActive(query, userRecord, opts = {}) {
+  async findOrCreateActive(query, userRecord, opts = {}) {
     let result = await this.collection.findOne(query, opts);
     if (result) {
       return result;

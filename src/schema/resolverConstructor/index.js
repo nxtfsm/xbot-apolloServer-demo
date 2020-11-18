@@ -1,15 +1,18 @@
-// ./src/schema/resolvers/index.js
+// ./src/schema/resolverConstructor/index.js
 import mutation from './_mutationConstructor';
-import {
-  queryTutorialsConstructor,
-  queryActiveUserConstructor,
-} from './_queryConstructor';
-
+import query from './_queryConstructor';
 
 export default {
   query: {
-    tutorials: (inp, dataSrc) => queryTutorialsConstructor(inp, dataSrc),
-    activeUser: (inp, dataSrc) => queryActiveUserConstructor(inp, dataSrc),
+    tutorials: async(input, dataSource) => {
+      const { getTutorials } = query(input, dataSource);
+      const { collection, articles } = await getTutorials();
+      return { collection, articles: articles() };
+    },
+    activeUser: async(input, dataSource) => {
+      const { findOrCreateUser } = query(input, dataSource);
+      return { updatedUser: await findOrCreateUser() };
+    },
   },
   mutation: {
     createOne: async(input, dataSource) => {

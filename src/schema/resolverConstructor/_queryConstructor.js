@@ -1,20 +1,26 @@
-// ./src/schema/resolvers/_queryConstructor.js
-import inputConstructor from './_inputConstructor';
+// ./src/schema/resolverConstructor/_queryConstructor.js
+import inputReducer from './_inputReducer';
 
-export async function queryTutorialsConstructor(input, dataSources) {
-  const args = await inputConstructor(input);
-  dataSources.inCollection = input.internalOrigin
-    ? dataSources.internalArticles
-    : dataSources.externalArticles;
+export default function(input, dataSources) {
   return {
-    args,
-    collection: input.internalOrigin ? 'internal' : 'external',
-    query: () => dataSources.inCollection.getAll(args),
-  };
-}
+    getTutorials: async() => {
+      const args = await inputReducer(input);
+      dataSources.inCollection = input.internalOrigin
+        ? dataSources.internalArticles
+        : dataSources.externalArticles;
 
-export async function queryActiveUserConstructor(input, dataSources) {
-  const query = { atXavierAccount: input.atXavierAccount };
-  const userRecord = await inputConstructor(input);
-  return () => dataSources.users.findActive(query, userRecord);
+      const articles = () => dataSources.inCollection.getAll(args);
+
+      return {
+        args,
+        collection: input.internalOrigin ? 'internal' : 'external',
+        articles: () => articles(),
+      };
+    },
+    findOrCreateUser: async() => {
+      const filter = { atXavierAccount: input.atXavierAccount };
+      const userRecord = await inputReducer(input);
+      return () => dataSources.users.findOrCreateActive(filter, userRecord);
+    },
+  };
 }
