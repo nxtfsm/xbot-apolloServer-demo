@@ -10,14 +10,16 @@ export default {
       } = await __queryConstructor(input, dataSources);
 
       return {
-        collection,
-        articles: query()
+          collection,
+          articles: query()
         }
       },
 
-    activeUser: (_, { atXavierAccount }, { dataSources }) => {
-        const query = { atXavierAccount: atXavierAccount }
-        return dataSources.users.findActive(query, {})
+    activeUser: async (_, { input }, { dataSources }) => {
+      const query = await __queryActiveUserConstructor(input, dataSources);
+      return {
+        updatedUser: query()
+      }
     }
   },
 
@@ -87,6 +89,12 @@ async function __queryConstructor(input, dataSources) {
     collection: !!input.internalOrigin ? 'internal' : 'external',
     query: () => dataSources.inCollection.getAll(args)
   }
+}
+
+async function __queryActiveUserConstructor(input, dataSources) {
+  const query = { atXavierAccount: input.atXavierAccount };
+  const userRecord = await __inputConstructor(input);
+  return () => dataSources.users.findActive(query, userRecord);
 }
 
 function __inputConstructor(input) {

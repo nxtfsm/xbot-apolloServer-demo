@@ -7,7 +7,14 @@ type Query {
     input: ArticleInput
   ): TutorialsQueryPayload!
 
-  activeUser( atXavierAccount: String! ): User
+  activeUser( input: ActiveUserQueryInput ): UpdateResponse
+}
+
+input ActiveUserQueryInput {
+  atXavierAccount: String!
+  firstName: String
+  familyName: String
+  isEditor: Boolean
 }
 
 type TutorialsQueryPayload {
