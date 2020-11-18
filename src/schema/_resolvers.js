@@ -1,5 +1,5 @@
 // ./src/schema/_resolvers.js
-import { logger } from '../'
+import constructor from './resolverConstructor';
 
 export default {
   Query: {
@@ -7,104 +7,29 @@ export default {
       const {
         collection,
         query
-      } = await __queryConstructor(input, dataSources);
+      } = await constructor.query.tutorials(input, dataSources);
 
-      return {
-          collection,
-          articles: query()
-        }
-      },
+      return { collection, articles: query() }
+    },
 
     activeUser: async (_, { input }, { dataSources }) => {
-      const query = await __queryActiveUserConstructor(input, dataSources);
-      return {
-        updatedUser: query()
-      }
+      const query = await constructor.query.activeUser(input, dataSources);
+      return { updatedUser: query() }
     }
   },
 
   Mutation: {
     createTutorial: async (_, { input }, { dataSources }) => {
-      const { create } = await __mutationConstructor(input, dataSources);
-      return create();
+      return await constructor.mutation.createOne(input, dataSources);
     },
 
     updateTutorial: async (_, { input, newValues }, { dataSources }) => {
-      const { update } = await __mutationConstructor(
-        input, dataSources, newValues);
-      return update();
+      return await constructor.mutation
+                              .updateOne(input, dataSources, newValues);
     },
 
     deleteTutorial: async (_, { input }, { dataSources }) => {
-      const { deleteOne } = await __mutationConstructor(input, dataSources);
-      return deleteOne();
+      return await constructor.mutation.deleteOne(input, dataSources);
     }
   }
-}
-
-async function __mutationConstructor(input, dataSources, newValues={}) {
-  const { args } = await __queryConstructor(input, dataSources);
-
-  return {
-    create: () => dataSources.inCollection.createNew(args)
-                    .then((result) => {
-                      return { successStatus: true, updatedArticle: result };
-                    })
-                    .catch((result) => {
-                      logger({'err': result})
-                      return { successStatus: false, updatedArticle: null };
-                    }),
-    update: async () => {
-              const doc = { $set: { ...newValues } };
-              const response = await dataSources.inCollection
-                                            .findOneAndUpdate(args, doc);
-
-              const successStatus = !!response;
-              const responseMsg = !!successStatus
-                            ? `updated article: ${ response._id }`
-                            : 'no articles updated';
-              return {
-                successStatus,
-                updatedArticle: response,
-                message: responseMsg
-              }
-            },
-    deleteOne: async () => {
-        const result = await dataSources.inCollection.findOneAndDelete(args)
-        return {
-          successStatus: result === 1 ? true : false,
-          message: `article deleted`
-        }
-    }
-  }
-}
-
-async function __queryConstructor(input, dataSources) {
-  const args = await __inputConstructor(input);
-  dataSources.inCollection = !!input.internalOrigin
-        ? dataSources.internalArticles
-        : dataSources.externalArticles;
-  return {
-    args,
-    collection: !!input.internalOrigin ? 'internal' : 'external',
-    query: () => dataSources.inCollection.getAll(args)
-  }
-}
-
-async function __queryActiveUserConstructor(input, dataSources) {
-  const query = { atXavierAccount: input.atXavierAccount };
-  const userRecord = await __inputConstructor(input);
-  return () => dataSources.users.findActive(query, userRecord);
-}
-
-function __inputConstructor(input) {
-  const args = {};
-
-  Object.entries(input).map(([key, value]) => {
-    if (value && key !== 'internalOrigin') {
-      args[key] = value
-    }
-  });
-
-  return args
 }

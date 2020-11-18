@@ -18,16 +18,31 @@ export default class Articles extends MongoDataSource {
     })
   }
 
-  async findOneAndUpdate(filter, update, opts={}) {
+  findOneAndUpdate(filter, update, opts={}) {
     opts.returnOriginal = false;
 
-    const res = await this.collection.findOneAndUpdate(filter, update, opts);
-    return res.value;
+    return new Promise((resolve, reject) => {
+      this.collection.findOneAndUpdate(filter, update, opts,
+      (err, result) => {
+        if (err) {
+          reject(err)
+        }
+        resolve(result.value)
+      })
+    })
   }
 
-  async findOneAndDelete(filter, opts={}) {
-    const res = await this.collection.findOneAndDelete(filter, opts);
-    return res.ok;
+  findOneAndDelete(filter, opts={}) {
+    return new Promise((resolve, reject) => {
+      this.collection.findOneAndDelete(filter, opts,
+      (err, result) => {
+        if (err) {
+          reject(err)
+        }
+
+        resolve(result)
+      })
+    })
   }
 
 }
