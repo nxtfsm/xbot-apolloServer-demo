@@ -8,4 +8,4 @@ export default gql`
     updatedArticle: Article
     updatedUser: User
   }
-`
+`;

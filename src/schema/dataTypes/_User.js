@@ -9,4 +9,4 @@ export default gql`
     familyName: String
     isEditor: Boolean
   }
-`
+`;

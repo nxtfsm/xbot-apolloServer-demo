@@ -2,47 +2,47 @@
 import { MongoDataSource } from 'apollo-datasource-mongodb';
 
 export default class Articles extends MongoDataSource {
-  async getAll(query, opts={}) {
-    return await this.collection.find(query, opts).toArray()
+  async getAll(query, opts = {}) {
+    return await this.collection.find(query, opts).toArray();
   }
 
-  createNew(doc, opts={}) {
+  createNew(doc, opts = {}) {
     return new Promise((resolve, reject) => {
-     this.collection.insertOne(doc, opts,
-       (err, result) => {
-        if (err) {
-           reject(err)
+      this.collection.insertOne(doc, opts,
+        (err, result) => {
+          if (err) {
+            reject(err);
           }
-        resolve(result.ops[0])
-      })
-    })
+          resolve(result.ops[0]);
+        });
+    });
   }
 
-  findOneAndUpdate(filter, update, opts={}) {
+  findOneAndUpdate(filter, update, opts = {}) {
     opts.returnOriginal = false;
 
     return new Promise((resolve, reject) => {
       this.collection.findOneAndUpdate(filter, update, opts,
-      (err, result) => {
-        if (err) {
-          reject(err)
-        }
-        resolve(result.value)
-      })
-    })
+        (err, result) => {
+          if (err) {
+            reject(err);
+          }
+          resolve(result.value);
+        });
+    });
   }
 
-  findOneAndDelete(filter, opts={}) {
+  findOneAndDelete(filter, opts = {}) {
     return new Promise((resolve, reject) => {
       this.collection.findOneAndDelete(filter, opts,
-      (err, result) => {
-        if (err) {
-          reject(err)
-        }
+        (err, result) => {
+          if (err) {
+            reject(err);
+          }
 
-        resolve(result)
-      })
-    })
+          resolve(result);
+        });
+    });
   }
 
 }

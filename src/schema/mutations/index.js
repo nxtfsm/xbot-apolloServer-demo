@@ -35,7 +35,7 @@ export default gql`
     ): UpdateResponse
 
   }
-`
+`;
 
 /*
 updateTutorial {

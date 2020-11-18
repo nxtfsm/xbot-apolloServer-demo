@@ -3,33 +3,33 @@ import constructor from './resolverConstructor';
 
 export default {
   Query: {
-    tutorials: async (parent, { input }, { dataSources }) => {
+    tutorials: async(parent, { input }, { dataSources }) => {
       const {
         collection,
-        query
+        query,
       } = await constructor.query.tutorials(input, dataSources);
 
-      return { collection, articles: query() }
+      return { collection, articles: query() };
     },
 
-    activeUser: async (_, { input }, { dataSources }) => {
+    activeUser: async(_, { input }, { dataSources }) => {
       const query = await constructor.query.activeUser(input, dataSources);
-      return { updatedUser: query() }
-    }
+      return { updatedUser: query() };
+    },
   },
 
   Mutation: {
-    createTutorial: async (_, { input }, { dataSources }) => {
+    createTutorial: async(_, { input }, { dataSources }) => {
       return await constructor.mutation.createOne(input, dataSources);
     },
 
-    updateTutorial: async (_, { input, newValues }, { dataSources }) => {
+    updateTutorial: async(_, { input, newValues }, { dataSources }) => {
       return await constructor.mutation
-                              .updateOne(input, dataSources, newValues);
+        .updateOne(input, dataSources, newValues);
     },
 
-    deleteTutorial: async (_, { input }, { dataSources }) => {
+    deleteTutorial: async(_, { input }, { dataSources }) => {
       return await constructor.mutation.deleteOne(input, dataSources);
-    }
-  }
-}
+    },
+  },
+};

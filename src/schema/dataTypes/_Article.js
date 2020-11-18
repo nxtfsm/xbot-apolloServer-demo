@@ -31,4 +31,4 @@ export default gql`
     content: String
     modifiedBy: ID
   }
-`
+`;

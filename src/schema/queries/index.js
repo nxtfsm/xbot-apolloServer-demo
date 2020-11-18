@@ -21,4 +21,4 @@ type TutorialsQueryPayload {
   collection: String
   articles: [Article]
 }
-`
+`;
