@@ -27,5 +27,13 @@ export default {
       const { deleteOne } = await mutation(input, dataSrc);
       return deleteOne();
     },
+    loginUser: async(input, dataSrc) => {
+      const query = { atXavierAccount: input.atXavierAccount };
+      const response = await dataSrc.users.loginUser(query);
+      return {
+        loggedInUser: response || null,
+        successStatus: response !== false,
+      };
+    },
   },
 };

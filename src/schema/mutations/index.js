@@ -16,6 +16,11 @@ export default gql`
       input: ArticleInput!
     ): UpdateResponse
 
+    loginUser(
+      input: LoginInput
+    ): LoginResponse
+
+
     createUser(
       atXavierAccount: String!
       firstName: String

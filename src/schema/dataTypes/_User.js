@@ -9,4 +9,24 @@ export default gql`
     familyName: String
     isEditor: Boolean
   }
+
+  input UserInput {
+    atXavierAccount: String
+    firstName: String
+    familyName: String
+    isEditor: Boolean
+  }
+
+  input LoginInput {
+    atXavierAccount: String!
+    verifiedEmail: Boolean
+    user: UserInput
+  }
+
+  type LoginResponse {
+    successStatus: Boolean
+    message: String
+    loggedInUser: User
+    token: String
+  }
 `;

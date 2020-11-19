@@ -12,6 +12,7 @@ type Query {
 
 input ActiveUserQueryInput {
   atXavierAccount: String!
+  verifiedEmail: Boolean
   firstName: String
   familyName: String
   isEditor: Boolean

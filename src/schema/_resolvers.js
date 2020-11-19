@@ -25,5 +25,8 @@ export default {
     deleteTutorial: async(_, { input }, { dataSources }) => {
       return await constructor.mutation.deleteOne(input, dataSources);
     },
+    loginUser: async(_, { input }, { dataSources }) => {
+      return await constructor.mutation.loginUser(input, dataSources);
+    },
   },
 };

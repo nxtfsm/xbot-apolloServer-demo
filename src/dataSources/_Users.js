@@ -11,4 +11,13 @@ export default class Users extends MongoDataSource {
       return result.ops[0];
     }
   }
+
+  async loginUser(query, opts = {}) {
+    let result = await this.collection.findOne(query, opts);
+    if (result) {
+      return result;
+    } else {
+      return false;
+    }
+  }
 }
