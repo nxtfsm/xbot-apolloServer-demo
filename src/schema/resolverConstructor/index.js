@@ -1,38 +1,41 @@
 // ./src/schema/resolverConstructor/index.js
 import tutorialMutation from './_tutorialMutations';
+import userMutation from './_userMutations';
 import query from './_queryConstructor';
 
 export default {
   query: {
-    tutorials: async(input, dataSource) => {
-      const { getTutorials } = query(input, dataSource);
+    tutorials: async(input, dataSources) => {
+      const { getTutorials } = query(input, dataSources);
       const { collection, articles } = await getTutorials();
       return { collection, articles: articles() };
     },
   },
   mutation: {
-    createOne: async(input, dataSource) => {
-      const { create } = await tutorialMutation(input, dataSource);
+    createOne: async(input, dataSources) => {
+      const { create } = await tutorialMutation(input, dataSources);
       return create();
     },
-    updateOne: async(input, dataSrc, newValues) => {
-      const { update } = await tutorialMutation(input, dataSrc, newValues);
+    updateOne: async(input, dataSources, newValues) => {
+      const { update } = await tutorialMutation(input, dataSources, newValues);
       return update();
     },
-    deleteOne: async(input, dataSrc) => {
-      const { deleteOne } = await tutorialMutation(input, dataSrc);
+    deleteOne: async(input, dataSources) => {
+      const { deleteOne } = await tutorialMutation(input, dataSources);
       return deleteOne();
     },
-    loginUser: async(input, dataSrc) => {
-      const query = { atXavierAccount: input.atXavierAccount };
+    loginUser: async(input, dataSources) => {
+      /* const query = { atXavierAccount: input.atXavierAccount };
       let response = await dataSrc.users.loginUser(query);
       if (!response && !!input.verifiedEmail) {
-        response = await dataSrc.users.createUser(input.user);
+        response = await dataSrc.users.createUser(input.user)
       }
       return {
-        loggedInUser: response || null,
-        successStatus: response !== false,
-      };
+        loggedInUser: response ? response : null,
+        successStatus: response !== false
+      }*/
+      const { loginUser } = await userMutation(input, dataSources);
+      return loginUser();
     },
   },
 };
