@@ -16,7 +16,6 @@ export default async function(input, dataSources, newValues = {}) {
     },
     update: async() => {
       const response = await dataSources.inCollection.findAndUpdate(args, doc);
-
       return {
         successStatus: response !== false,
         updatedArticle: response || null,
