@@ -6,30 +6,15 @@ export default class Articles extends MongoDataSource {
     return await this.collection.find(query, opts).toArray();
   }
 
-  createNew(doc, opts = {}) {
-    return new Promise((resolve, reject) => {
-      this.collection.insertOne(doc, opts,
-        (err, result) => {
-          if (err) {
-            reject(err);
-          }
-          resolve(result.ops[0]);
-        });
-    });
+  async createNew(doc, opts = {}) {
+    const result = await this.collection.insertOne(doc, opts);
+    return result ? result.ops[0] : false;
   }
 
-  findOneAndUpdate(filter, update, opts = {}) {
+  async findAndUpdate(filter, update, opts = {}) {
     opts.returnOriginal = false;
-
-    return new Promise((resolve, reject) => {
-      this.collection.findOneAndUpdate(filter, update, opts,
-        (err, result) => {
-          if (err) {
-            reject(err);
-          }
-          resolve(result.value);
-        });
-    });
+    const res = await this.collection.findOneAndUpdate(filter, update, opts);
+    return res ? res.value : false;
   }
 
   findOneAndDelete(filter, opts = {}) {

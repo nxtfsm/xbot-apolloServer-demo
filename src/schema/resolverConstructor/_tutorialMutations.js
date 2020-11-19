@@ -7,28 +7,23 @@ export default async function(input, dataSources, newValues = {}) {
   const doc = { $set: { ...newValues} };
 
   return {
-    create: () => dataSources.inCollection.createNew(args)
-      .then((result) => {
-        return { successStatus: true, updatedArticle: result };
-      })
-      .catch((result) => {
-        return { successStatus: false, updatedArticle: null };
-      }),
-    update: () => dataSources.inCollection.findOneAndUpdate(args, doc)
-      .then((result) => {
-        return {
-          successStatus: true,
-          updatedArticle: result,
-          message: `updated article: ${ result._id }`,
-        };
-      })
-      .catch((result) => {
-        return {
-          successStatus: false,
-          updatedArticle: null,
-          message: 'no article updated',
-        };
-      }),
+    create: async() => {
+      const response = await dataSources.inCollection.createNew(args);
+      return {
+        successStatus: response !== false,
+        updatedArticle: response || null,
+      };
+    },
+    update: async() => {
+      const response = await dataSources.inCollection.findAndUpdate(args, doc);
+
+      return {
+        successStatus: response !== false,
+        updatedArticle: response || null,
+        message: response ? `updatedArticle: ${ response._id }`
+          : 'no articles updated',
+      };
+    },
     deleteOne: () => dataSources.inCollection.findOneAndDelete(args)
       .then((result) => {
         const successStatus = result.ok === 1;
