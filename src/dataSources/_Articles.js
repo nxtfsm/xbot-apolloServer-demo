@@ -17,17 +17,9 @@ export default class Articles extends MongoDataSource {
     return res ? res.value : false;
   }
 
-  findOneAndDelete(filter, opts = {}) {
-    return new Promise((resolve, reject) => {
-      this.collection.findOneAndDelete(filter, opts,
-        (err, result) => {
-          if (err) {
-            reject(err);
-          }
-
-          resolve(result);
-        });
-    });
+  async findOneAndDelete(filter, opts = {}) {
+    const result = await this.collection.findOneAndDelete(filter, opts);
+    return result || false;
   }
 
 }

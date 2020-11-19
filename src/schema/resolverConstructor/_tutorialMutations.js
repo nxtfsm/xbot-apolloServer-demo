@@ -23,24 +23,15 @@ export default async function(input, dataSources, newValues = {}) {
           : 'no articles updated',
       };
     },
-    deleteOne: () => dataSources.inCollection.findOneAndDelete(args)
-      .then((result) => {
-        const successStatus = result.ok === 1;
-        const message = successStatus
-          ? `deleted item ${result.value._id}`
-          : `failed to delete item ${result.value._id}`;
-        return {
-          successStatus,
-          message,
-          updatedArticle: result.value,
-        };
-      })
-      .catch((result) => {
-        return {
-          successStatus: result.ok === 1,
-          updatedArticle: null,
-          message: `error from dataSource: ${result}`,
-        };
-      }),
+    deleteOne: async() => {
+      const response = await dataSources.inCollection.findOneAndDelete(args);
+      return {
+        successStatus: response.ok === 1,
+        updatedArticle: response.value ? response.value : null,
+        message: response.value
+          ? `deletedArticle: ${ response.value._id }`
+          : `no articles deleted, clean exit: ${ response.ok === 1}`,
+      };
+    },
   };
 }
