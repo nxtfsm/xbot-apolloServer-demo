@@ -25,15 +25,6 @@ export default {
       return deleteOne();
     },
     loginUser: async(input, dataSources) => {
-      /* const query = { atXavierAccount: input.atXavierAccount };
-      let response = await dataSrc.users.loginUser(query);
-      if (!response && !!input.verifiedEmail) {
-        response = await dataSrc.users.createUser(input.user)
-      }
-      return {
-        loggedInUser: response ? response : null,
-        successStatus: response !== false
-      }*/
       const { loginUser } = await userMutation(input, dataSources);
       return loginUser();
     },
