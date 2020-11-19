@@ -1,4 +1,4 @@
-// ./src/schema/resolverConstructor/_mutationConstructor.js
+// ./src/schema/resolverConstructor/_tutorialMutations.js
 import queryConstructor from './_queryConstructor';
 
 export default async function(input, dataSources, newValues = {}) {

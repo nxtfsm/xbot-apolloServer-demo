@@ -20,21 +20,6 @@ export default gql`
       input: LoginInput
     ): LoginResponse
 
-
-    createUser(
-      atXavierAccount: String!
-      firstName: String
-      familyName: String
-      isEditor: Boolean
-    ): UpdateResponse
-
-    updateUser(
-      atXavierAccount: String!
-      firstName: String
-      familyName: String
-      isEditor: Boolean
-    ): UpdateResponse
-
     deleteUser(
       _id: ID!
     ): UpdateResponse

@@ -6,10 +6,6 @@ export default {
     tutorials: async(parent, { input }, { dataSources }) => {
       return await constructor.query.tutorials(input, dataSources);
     },
-
-    activeUser: async(_, { input }, { dataSources }) => {
-      return await constructor.query.activeUser(input, dataSources);
-    },
   },
 
   Mutation: {
@@ -25,6 +21,7 @@ export default {
     deleteTutorial: async(_, { input }, { dataSources }) => {
       return await constructor.mutation.deleteOne(input, dataSources);
     },
+
     loginUser: async(_, { input }, { dataSources }) => {
       return await constructor.mutation.loginUser(input, dataSources);
     },

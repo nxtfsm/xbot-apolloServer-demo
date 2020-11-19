@@ -6,16 +6,6 @@ type Query {
   tutorials(
     input: ArticleInput
   ): TutorialsQueryPayload!
-
-  activeUser( input: ActiveUserQueryInput ): UpdateResponse
-}
-
-input ActiveUserQueryInput {
-  atXavierAccount: String!
-  verifiedEmail: Boolean
-  firstName: String
-  familyName: String
-  isEditor: Boolean
 }
 
 type TutorialsQueryPayload {

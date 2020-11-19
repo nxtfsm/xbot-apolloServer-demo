@@ -1,5 +1,5 @@
 // ./src/schema/resolverConstructor/index.js
-import mutation from './_mutationConstructor';
+import tutorialMutation from './_tutorialMutations';
 import query from './_queryConstructor';
 
 export default {
@@ -9,27 +9,26 @@ export default {
       const { collection, articles } = await getTutorials();
       return { collection, articles: articles() };
     },
-    activeUser: async(input, dataSource) => {
-      const { findOrCreateUser } = query(input, dataSource);
-      return { updatedUser: await findOrCreateUser() };
-    },
   },
   mutation: {
     createOne: async(input, dataSource) => {
-      const { create } = await mutation(input, dataSource);
+      const { create } = await tutorialMutation(input, dataSource);
       return create();
     },
     updateOne: async(input, dataSrc, newValues) => {
-      const { update } = await mutation(input, dataSrc, newValues);
+      const { update } = await tutorialMutation(input, dataSrc, newValues);
       return update();
     },
     deleteOne: async(input, dataSrc) => {
-      const { deleteOne } = await mutation(input, dataSrc);
+      const { deleteOne } = await tutorialMutation(input, dataSrc);
       return deleteOne();
     },
     loginUser: async(input, dataSrc) => {
       const query = { atXavierAccount: input.atXavierAccount };
-      const response = await dataSrc.users.loginUser(query);
+      let response = await dataSrc.users.loginUser(query);
+      if (!response && !!input.verifiedEmail) {
+        response = await dataSrc.users.createUser(input.user);
+      }
       return {
         loggedInUser: response || null,
         successStatus: response !== false,

@@ -17,10 +17,5 @@ export default function(input, dataSources) {
         articles: () => articles(),
       };
     },
-    findOrCreateUser: async() => {
-      const filter = { atXavierAccount: input.atXavierAccount };
-      const userRecord = await inputReducer(input);
-      return () => dataSources.users.findOrCreateActive(filter, userRecord);
-    },
   };
 }
