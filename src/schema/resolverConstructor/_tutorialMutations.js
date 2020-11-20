@@ -1,24 +1,24 @@
 // ./src/schema/resolverConstructor/_tutorialMutations.js
-import queryConstructor from './_queryConstructor';
+import inputReducer from './_inputReducer';
 
-export default async function(input, dataSources, newValues = {}) {
-  const { getTutorials } = queryConstructor(input, dataSources);
-  const { args } = await getTutorials();
+export default async function(input, inCollection, newValues = {}) {
+  const args = inputReducer(input);
   const doc = { $set: { ...newValues} };
 
   const errorStr = (err = {}) => `dataSource interface error: ${err}`;
 
   return {
     create: async() => {
-      const response = await dataSources.inCollection.createNew(args);
+      const response = await inCollection.createNew(args);
       return {
         successStatus: !!response,
         updatedArticle: response || null,
         message: response ? `updatedArticle: ${response._id}` : errorStr(),
       };
     },
+
     update: async() => {
-      const response = await dataSources.inCollection.findAndUpdate(args, doc);
+      const response = await inCollection.findAndUpdate(args, doc);
       return response ? {
         successStatus: response.ok === 1,
         updatedArticle: response.value ? response.value : null,
@@ -27,8 +27,9 @@ export default async function(input, dataSources, newValues = {}) {
           : `no articles updated, clean exit: ${ response.ok === 1}`,
       } : { successStatus: false, updatedArticle: null, message: errorStr() };
     },
+
     deleteOne: async() => {
-      const response = await dataSources.inCollection.findOneAndDelete(args);
+      const response = await inCollection.findOneAndDelete(args);
       return response ? {
         successStatus: response.ok === 1,
         updatedArticle: response.value ? response.value : null,

@@ -4,26 +4,32 @@ import resolve from './resolverConstructor';
 export default {
   Query: {
     tutorials: async(parent, { input }, { dataSources }) => {
-      const collection = resolve.setCollection(input.internalOrigin);
+      const collectKey = resolve.setCollection(input.internalOrigin);
+      const collection = dataSources[collectKey];
       return {
-        collection,
-        articles: await resolve.query
-          .tutorials(input, dataSources[collection]),
+        collection: collectKey,
+        articles: await resolve.query.tutorials(input, collection),
       };
     },
   },
 
   Mutation: {
     createTutorial: async(_, { input }, { dataSources }) => {
-      return await resolve.mutation.createOne(input, dataSources);
+      const collectKey = resolve.setCollection(input.internalOrigin);
+      const collection = dataSources[collectKey];
+      return await resolve.mutation.createOne(input, collection);
     },
 
     updateTutorial: async(_, { input, newValues }, { dataSources }) => {
-      return await resolve.mutation.updateOne(input, dataSources, newValues);
+      const collectKey = resolve.setCollection(input.internalOrigin);
+      const collection = dataSources[collectKey];
+      return await resolve.mutation.updateOne(input, collection, newValues);
     },
 
     deleteTutorial: async(_, { input }, { dataSources }) => {
-      return await resolve.mutation.deleteOne(input, dataSources);
+      const collectKey = resolve.setCollection(input.internalOrigin);
+      const collection = dataSources[collectKey];
+      return await resolve.mutation.deleteOne(input, collection);
     },
 
     loginUser: async(_, { input }, { dataSources }) => {

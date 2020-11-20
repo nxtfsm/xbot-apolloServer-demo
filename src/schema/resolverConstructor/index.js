@@ -15,16 +15,16 @@ export default {
     },
   },
   mutation: {
-    createOne: async(input, dataSources) => {
-      const { create } = await tutorialMutation(input, dataSources);
+    createOne: async(input, collection) => {
+      const { create } = await tutorialMutation(input, collection);
       return create();
     },
-    updateOne: async(input, dataSources, newValues) => {
-      const { update } = await tutorialMutation(input, dataSources, newValues);
+    updateOne: async(input, collection, newValues) => {
+      const { update } = await tutorialMutation(input, collection, newValues);
       return update();
     },
-    deleteOne: async(input, dataSources) => {
-      const { deleteOne } = await tutorialMutation(input, dataSources);
+    deleteOne: async(input, collection) => {
+      const { deleteOne } = await tutorialMutation(input, collection);
       return deleteOne();
     },
     loginUser: async(input, collection) => {
