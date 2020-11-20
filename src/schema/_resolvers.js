@@ -3,37 +3,33 @@ import resolve from './resolverConstructor';
 
 export default {
   Query: {
-    tutorials: async(parent, { input }, { dataSources }) => {
-      const collectKey = resolve.setCollection(input.internalOrigin);
-      const collection = dataSources[collectKey];
+    tutorials: (parent, { input }, { dataSources }) => {
+      const { key, collection } = resolve.collection(input, dataSources);
       return {
-        collection: collectKey,
-        articles: await resolve.query.tutorials(input, collection),
+        collection: key,
+        articles: resolve.query.tutorials(input, collection),
       };
     },
   },
 
   Mutation: {
-    createTutorial: async(_, { input }, { dataSources }) => {
-      const collectKey = resolve.setCollection(input.internalOrigin);
-      const collection = dataSources[collectKey];
-      return await resolve.mutation.createOne(input, collection);
+    createTutorial: (_, { input }, { dataSources }) => {
+      const { collection } = resolve.collection(input, dataSources);
+      return resolve.mutation.createOne(input, collection);
     },
 
-    updateTutorial: async(_, { input, newValues }, { dataSources }) => {
-      const collectKey = resolve.setCollection(input.internalOrigin);
-      const collection = dataSources[collectKey];
-      return await resolve.mutation.updateOne(input, collection, newValues);
+    updateTutorial: (_, { input, newValues }, { dataSources }) => {
+      const { collection } = resolve.collection(input, dataSources);
+      return resolve.mutation.updateOne(input, collection, newValues);
     },
 
-    deleteTutorial: async(_, { input }, { dataSources }) => {
-      const collectKey = resolve.setCollection(input.internalOrigin);
-      const collection = dataSources[collectKey];
-      return await resolve.mutation.deleteOne(input, collection);
+    deleteTutorial: (_, { input }, { dataSources }) => {
+      const { collection } = resolve.collection(input, dataSources);
+      return resolve.mutation.deleteOne(input, collection);
     },
 
-    loginUser: async(_, { input }, { dataSources }) => {
-      return await resolve.mutation.loginUser(input, dataSources.users);
+    loginUser: (_, { input }, { dataSources }) => {
+      return resolve.mutation.loginUser(input, dataSources.users);
     },
   },
 };

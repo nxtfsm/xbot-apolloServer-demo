@@ -1,15 +1,15 @@
 // ./src/schema/resolverConstructor/_tutorialMutations.js
 import inputReducer from './_inputReducer';
 
-export default async function(input, inCollection, newValues = {}) {
+export default function(input, inCollection, newValues = {}) {
   const args = inputReducer(input);
   const doc = { $set: { ...newValues} };
 
   const errorStr = (err = {}) => `dataSource interface error: ${err}`;
 
   return {
-    create: async() => {
-      const response = await inCollection.createNew(args);
+    create: () => {
+      const response = inCollection.createNew(args);
       return {
         successStatus: !!response,
         updatedArticle: response || null,

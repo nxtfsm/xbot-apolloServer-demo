@@ -4,31 +4,33 @@ import userMutation from './_userMutations';
 import query from './_queryConstructor';
 
 export default {
-  setCollection: (inputOrigin) => {
-    return inputOrigin ? 'internalArticles' : 'externalArticles';
+  collection: (input, dataSources) => {
+    const key = input.internalOrigin
+      ? 'internalArticles'
+      : 'externalArticles';
+    return { key, collection: dataSources[key] };
   },
   query: {
-    tutorials: async(input, collection) => {
+    tutorials: (input, collection) => {
       const { getTutorials } = query(input, collection);
-      const { articles } = await getTutorials();
-      return articles();
+      return getTutorials();
     },
   },
   mutation: {
-    createOne: async(input, collection) => {
-      const { create } = await tutorialMutation(input, collection);
+    createOne: (input, collection) => {
+      const { create } = tutorialMutation(input, collection);
       return create();
     },
-    updateOne: async(input, collection, newValues) => {
-      const { update } = await tutorialMutation(input, collection, newValues);
+    updateOne: (input, collection, newValues) => {
+      const { update } = tutorialMutation(input, collection, newValues);
       return update();
     },
-    deleteOne: async(input, collection) => {
-      const { deleteOne } = await tutorialMutation(input, collection);
+    deleteOne: (input, collection) => {
+      const { deleteOne } = tutorialMutation(input, collection);
       return deleteOne();
     },
-    loginUser: async(input, collection) => {
-      const { loginUser } = await userMutation(input, collection);
+    loginUser: (input, collection) => {
+      const { loginUser } = userMutation(input, collection);
       return loginUser();
     },
   },

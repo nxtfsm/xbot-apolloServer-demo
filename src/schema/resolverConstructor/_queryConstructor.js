@@ -5,11 +5,7 @@ export default function(input, inCollection) {
   return {
     getTutorials: () => {
       const args = inputReducer(input);
-
-      return {
-        args,
-        articles: () => inCollection.getAll(args),
-      };
+      return inCollection.getAll(args);
     },
   };
 }

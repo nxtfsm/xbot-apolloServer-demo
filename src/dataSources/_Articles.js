@@ -1,4 +1,4 @@
-// ./src/dataSources/_External.js
+// ./src/dataSources/_Articles.js
 import { MongoDataSource } from 'apollo-datasource-mongodb';
 
 export default class Articles extends MongoDataSource {
