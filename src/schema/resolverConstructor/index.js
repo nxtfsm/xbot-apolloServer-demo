@@ -4,11 +4,14 @@ import userMutation from './_userMutations';
 import query from './_queryConstructor';
 
 export default {
+  setCollection: (inputOrigin) => {
+    return inputOrigin ? 'internalArticles' : 'externalArticles';
+  },
   query: {
-    tutorials: async(input, dataSources) => {
-      const { getTutorials } = query(input, dataSources);
-      const { collection, articles } = await getTutorials();
-      return { collection, articles: articles() };
+    tutorials: async(input, collection) => {
+      const { getTutorials } = query(input, collection);
+      const { articles } = await getTutorials();
+      return articles();
     },
   },
   mutation: {
@@ -24,8 +27,8 @@ export default {
       const { deleteOne } = await tutorialMutation(input, dataSources);
       return deleteOne();
     },
-    loginUser: async(input, dataSources) => {
-      const { loginUser } = await userMutation(input, dataSources);
+    loginUser: async(input, collection) => {
+      const { loginUser } = await userMutation(input, collection);
       return loginUser();
     },
   },

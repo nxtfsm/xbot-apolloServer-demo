@@ -4,7 +4,12 @@ import resolve from './resolverConstructor';
 export default {
   Query: {
     tutorials: async(parent, { input }, { dataSources }) => {
-      return await resolve.query.tutorials(input, dataSources);
+      const collection = resolve.setCollection(input.internalOrigin);
+      return {
+        collection,
+        articles: await resolve.query
+          .tutorials(input, dataSources[collection]),
+      };
     },
   },
 
@@ -22,7 +27,7 @@ export default {
     },
 
     loginUser: async(_, { input }, { dataSources }) => {
-      return await resolve.mutation.loginUser(input, dataSources);
+      return await resolve.mutation.loginUser(input, dataSources.users);
     },
   },
 };

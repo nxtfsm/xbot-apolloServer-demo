@@ -19,7 +19,7 @@ export default gql`
 
   input LoginInput {
     atXavierAccount: String!
-    verifiedEmail: Boolean
+    verifiedEmail: Boolean!
     user: UserInput
   }
 
