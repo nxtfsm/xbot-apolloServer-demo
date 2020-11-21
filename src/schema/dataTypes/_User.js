@@ -7,14 +7,21 @@ export default gql`
     atXavierAccount: String
     firstName: String
     familyName: String
+    fullName: String
+    goesBy: String
     isEditor: Boolean
+    lastLogin: Date
   }
 
   input UserInput {
+    _id: ID
     atXavierAccount: String
     firstName: String
     familyName: String
+    fullName: String
+    goesBy: String
     isEditor: Boolean
+    lastLogin: Date
   }
 
   input LoginInput {

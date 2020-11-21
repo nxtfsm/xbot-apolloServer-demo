@@ -4,7 +4,7 @@ import userMutation from './_userMutations';
 import query from './_queryConstructor';
 
 export default {
-  collection: (input, dataSources) => {
+  setCollection: (input, dataSources) => {
     const key = input.internalOrigin
       ? 'internalArticles'
       : 'externalArticles';

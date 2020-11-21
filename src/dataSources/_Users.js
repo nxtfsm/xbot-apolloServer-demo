@@ -2,8 +2,11 @@
 import { MongoDataSource } from 'apollo-datasource-mongodb';
 
 export default class Users extends MongoDataSource {
-  async loginUser(query, opts = {}) {
-    return await this.collection.findOne(query, opts) || false;
+  async loginUser(query, update, opts = {}) {
+    opts.returnOriginal = false;
+    const response = await this.collection
+      .findOneAndUpdate(query, update, opts) || false;
+    return response.value;
   }
 
   async createUser(userRecord) {

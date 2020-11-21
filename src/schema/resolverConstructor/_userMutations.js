@@ -8,10 +8,12 @@ export default function(input, collection) {
       };
 
       const query = { atXavierAccount: input.atXavierAccount };
-      let response = await collection.loginUser(query);
+      const update = {$set: { lastLogin: input.user.lastLogin } };
+      let response = await collection.loginUser(query, update);
       if (!response) {
         response = await collection.createUser(input.user);
       }
+
       return {
         loggedInUser: response || null,
         successStatus: response !== false,
