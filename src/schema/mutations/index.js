@@ -20,6 +20,10 @@ export default gql`
       input: LoginInput
     ): LoginResponse
 
+    updateUser(
+      input: UserInput
+    ): UpdateResponse
+
     deleteUser(
       _id: ID!
     ): UpdateResponse

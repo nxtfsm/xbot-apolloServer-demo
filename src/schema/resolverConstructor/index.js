@@ -33,5 +33,9 @@ export default {
       const { loginUser } = userMutation(input, collection);
       return loginUser();
     },
+    updateUser: (input, collection) => {
+      const { updateUser } = userMutation(input, collection);
+      return updateUser();
+    },
   },
 };

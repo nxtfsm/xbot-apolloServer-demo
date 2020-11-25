@@ -34,6 +34,9 @@ export default {
     loginUser: (_, { input }, { dataSources }) => {
       return mutation.loginUser(input, dataSources.users);
     },
+    updateUser: (_, { input }, { dataSources }) => {
+      return mutation.updateUser(input, dataSources.users);
+    },
   },
 
   Date: new GraphQLScalarType({

@@ -1,4 +1,5 @@
-// ./src/schema/resolverConstructor/_tutorialMutations.js
+// ./src/schema/resolverConstructor/_userMutations.js
+
 export default function(input, collection) {
   return {
     loginUser: async() => {
@@ -17,6 +18,18 @@ export default function(input, collection) {
       return {
         loggedInUser: response || null,
         successStatus: response !== false,
+      };
+    },
+    updateUser: async() => {
+      const query = { atXavierAccount: input.atXavierAccount };
+      const update = {$set: { firstName: input.firstName } };
+      const response = await collection.updateUser(query, update);
+      return {
+        successStatus: !!response,
+        message: response
+          ? `User ${response._id} updated`
+          : 'user update error',
+        updatedUser: response || null,
       };
     },
   };
