@@ -1,6 +1,9 @@
 // ./src/schema/resolverConstructor/_userMutations.js
+import inputReducer from './_inputReducer';
 
 export default function(input, collection) {
+  const args = inputReducer(input);
+
   return {
     loginUser: async() => {
       if (!input.verifiedEmail) return {
@@ -22,7 +25,7 @@ export default function(input, collection) {
     },
     updateUser: async() => {
       const query = { atXavierAccount: input.atXavierAccount };
-      const update = {$set: { firstName: input.firstName } };
+      const update = {$set: { ...args } };
       const response = await collection.updateUser(query, update);
       return {
         successStatus: !!response,
