@@ -11,6 +11,7 @@ export default gql`
     goesBy: String
     isEditor: Boolean
     lastLogin: Date
+    lastUpdate: Date
   }
 
   input UserInput {
@@ -22,6 +23,7 @@ export default gql`
     goesBy: String
     isEditor: Boolean
     lastLogin: Date
+    lastUpdate: Date
   }
 
   input LoginInput {
