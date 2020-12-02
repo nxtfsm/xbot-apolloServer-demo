@@ -7,8 +7,8 @@ import dataSources from './dataSources';
 import logger from './__debugger__';
 
 export default async function(app, config) {
-  const { port, remoteURI, debugging } = config;
   if (!app) process.exit();
+  const { port, remoteURI, debugging } = config;
 
   const server = new ApolloServer({
     ...schema,

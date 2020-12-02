@@ -8,7 +8,7 @@ export default function(input, inCollection, newValues = {}) {
   const errorStr = (err = {}) => `dataSource interface error: ${err}`;
 
   return {
-    create: () => {
+    create() {
       const response = inCollection.createNew(args);
       return {
         successStatus: !!response,
@@ -17,7 +17,7 @@ export default function(input, inCollection, newValues = {}) {
       };
     },
 
-    update: async() => {
+    async update() {
       const response = await inCollection.findAndUpdate(args, doc);
       return response ? {
         successStatus: response.ok === 1,
@@ -28,7 +28,7 @@ export default function(input, inCollection, newValues = {}) {
       } : { successStatus: false, updatedArticle: null, message: errorStr() };
     },
 
-    deleteOne: async() => {
+    async deleteOne() {
       const response = await inCollection.findOneAndDelete(args);
       return response ? {
         successStatus: response.ok === 1,

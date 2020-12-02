@@ -3,7 +3,7 @@ import inputReducer from './_inputReducer';
 
 export default function(input, inCollection) {
   return {
-    getTutorials: () => {
+    getTutorials() {
       const args = inputReducer(input);
       return inCollection.getAll(args);
     },

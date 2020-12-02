@@ -6,7 +6,7 @@ const { setCollection, mutation, query } = resolve;
 
 export default {
   Query: {
-    tutorials: (parent, { input }, { dataSources }) => {
+    tutorials(parent, { input }, { dataSources }) {
       const { key, collection } = setCollection(input, dataSources);
       return {
         collection: key,
@@ -16,25 +16,25 @@ export default {
   },
 
   Mutation: {
-    createTutorial: (_, { input }, { dataSources }) => {
+    createTutorial(_, { input }, { dataSources }) {
       const { collection } = setCollection(input, dataSources);
       return mutation.createOne(input, collection);
     },
 
-    updateTutorial: (_, { input, newValues }, { dataSources }) => {
+    updateTutorial(_, { input, newValues }, { dataSources }) {
       const { collection } = setCollection(input, dataSources);
       return mutation.updateOne(input, collection, newValues);
     },
 
-    deleteTutorial: (_, { input }, { dataSources }) => {
+    deleteTutorial(_, { input }, { dataSources }) {
       const { collection } = setCollection(input, dataSources);
       return mutation.deleteOne(input, collection);
     },
 
-    loginUser: (_, { input }, { dataSources }) => {
+    loginUser(_, { input }, { dataSources }) {
       return mutation.loginUser(input, dataSources.users);
     },
-    updateUser: (_, { input }, { dataSources }) => {
+    updateUser(_, { input }, { dataSources }) {
       return mutation.updateUser(input, dataSources.users);
     },
   },

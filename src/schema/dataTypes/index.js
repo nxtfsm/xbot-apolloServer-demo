@@ -5,11 +5,9 @@ import Date from './_Date';
 import User from './_User';
 import UpdateResponse from './_UpdateResponse';
 
-export default function() {
-  return gql`
+export default gql`
     ${Article}
     ${Date}
     ${User}
     ${UpdateResponse}
 `;
-}

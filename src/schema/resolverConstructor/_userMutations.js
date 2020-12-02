@@ -5,7 +5,7 @@ export default function(input, collection) {
   const args = inputReducer(input);
 
   return {
-    loginUser: async() => {
+    async loginUser() {
       if (!input.verifiedEmail) return {
         successStatus: false,
         loggedInUser: null,
@@ -23,7 +23,7 @@ export default function(input, collection) {
         successStatus: response !== false,
       };
     },
-    updateUser: async() => {
+    async updateUser() {
       const query = { atXavierAccount: input.atXavierAccount };
       const update = {$set: { ...args } };
       const response = await collection.updateUser(query, update);
