@@ -1,5 +1,5 @@
 // ./src/schema/dataTypes/index.js
-import { gql } from 'apollo-server';
+import { gql } from 'apollo-server-express';
 import Article from './_Article';
 import Date from './_Date';
 import User from './_User';

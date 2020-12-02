@@ -20,7 +20,7 @@ export default async function(app, config) {
   app.listen({ port }, () => {
     databaseClient.connect(remoteURI)
       .then((res, rej) => {
-        const activeMsg = `🖖 Server ready at http://localhost:${port}`;
+        const activeMsg = `🖖 at http://localhost:${port}/graphql`;
         debugging ? logger({info: res}) : logger();
         logger(activeMsg);
       })

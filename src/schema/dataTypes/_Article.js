@@ -1,5 +1,5 @@
 // ./src/schema/dataTypes/_Article.js
-import { gql } from 'apollo-server';
+import { gql } from 'apollo-server-express';
 
 export default gql`
   type Article {
