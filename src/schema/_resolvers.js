@@ -6,7 +6,7 @@ const { setCollection, mutation, query } = resolve;
 
 export default {
   Query: {
-    tutorials(parent, { input }, { dataSources }) {
+    tutorials(_, { input }, { dataSources }) {
       const { key, collection } = setCollection(input, dataSources);
       return {
         collection: key,
@@ -32,9 +32,11 @@ export default {
     },
 
     loginUser(_, { input }, { dataSources }) {
+
       return mutation.loginUser(input, dataSources.users);
     },
     updateUser(_, { input }, { dataSources }) {
+      // console.log(dataSources.users.context.authorization)
       return mutation.updateUser(input, dataSources.users);
     },
   },

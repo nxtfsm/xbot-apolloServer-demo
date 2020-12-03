@@ -1,6 +1,17 @@
-import axios from 'axios';
+/* import axios from 'axios';
 
-export default function authenticateApplication(testId, testSecret) {
+export default function testAuth(authorization) {
+  const config = {
+    method: 'GET',
+    url: 'http://localhost:4002/private',
+    headers: { authorization },
+  };
+  axios.request(config)
+    .then(response => console.log(response.data.user))
+    .catch(error => console.log(error));
+}
+
+export function authenticateApplication(testId, testSecret) {
   const config = {
     method: 'POST',
     url: 'https://dev-r0qdxyeq.us.auth0.com/oauth/token',
@@ -29,4 +40,4 @@ export default function authenticateApplication(testId, testSecret) {
       console.error(error);
     });
 
-}
+}*/

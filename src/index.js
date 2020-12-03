@@ -5,8 +5,8 @@ import databaseClient from './databaseClient';
 import dataSources from './dataSources';
 import logger from './__debugger__';
 import launchExpress from './_authExpress';
-import authApplication from './_authApplication';
-export { launchExpress, authApplication };
+import validateToken from './_validateToken';
+export { launchExpress };
 
 export default async function(app, config) {
   if (!app) process.exit();
@@ -16,8 +16,10 @@ export default async function(app, config) {
     ...schema,
     dataSources: () => dataSources(databaseClient.getDB()),
     context: ({ req }) => {
-      const token = req.headers.authorization || '';
-      return { token };
+      validateToken(req);
+
+      const authorization = req.headers.authorization || '';
+      return { authorization };
     },
   });
 
