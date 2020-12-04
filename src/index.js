@@ -2,13 +2,11 @@
 import { ApolloServer } from 'apollo-server-express';
 import databaseClient from './databaseClient';
 import dataSources from './dataSources';
-import launchExpress from './_authExpress';
 import logger from './__debugger__';
 import schema from './schema';
-import validateToken from './_validateToken';
-export { launchExpress };
+import { validateToken } from './middleware';
 
-export default async function(app, config) {
+export default async function Server(app, config) {
   if (!app) process.exit();
   const { port, remoteURI, debugging } = config;
 

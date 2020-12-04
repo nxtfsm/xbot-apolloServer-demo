@@ -1,28 +1,7 @@
 import jwt from 'jsonWebToken';
-import jwksRsa from 'jwks-rsa';
+import jwtMiddleware from './_jwtMiddleware';
 
-const client = jwksRsa({
-  cache: true,
-  cacheMaxEntries: 5,
-  cacheMaxAge: 600000,
-  rateLimit: true,
-  jwksRequestsPerMinute: 5,
-  jwksUri: 'https://dev-r0qdxyeq.us.auth0.com/.well-known/jwks.json',
-});
-
-const options = {
-  algorithm: 'RS256',
-  audience: 'https://xbotdemo/api',
-  issuer: 'https://dev-r0qdxyeq.us.auth0.com/',
-};
-
-function getKey(header, callback) {
-  client.getSigningKey(header.kid, function(err, key) {
-    if (err) throw new Error;
-    const signingKey = key.publicKey || key.rsaPublicKey;
-    callback(null, signingKey);
-  });
-}
+const { options, getKey } = jwtMiddleware;
 
 export default function validateToken(request) {
   return new Promise((resolve, reject) => {

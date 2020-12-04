@@ -2,6 +2,7 @@
 import tutorialMutation from './_tutorialMutations';
 import userMutation from './_userMutations';
 import query from './_queryConstructor';
+import permit from './_permissionChecks';
 
 export default {
   setCollection(input, dataSources) {
@@ -30,27 +31,18 @@ export default {
       return deleteOne();
     },
     loginUser(input, collection) {
-      const { loginUser } = userMutation(input, collection);
-      return loginUser();
+      const { authorization } = collection.context;
+      if (permit.queryLogin(authorization)) {
+        const { loginUser } = userMutation(input, collection);
+        return loginUser();
+      }
     },
     updateUser(input, collection) {
-      const { updateUser } = userMutation(input, collection);
-      return updateUser();
-    },
-  },
-  permit: {
-    queryLogin({ permissions }) {
-      return !!permissions && permissions.includes('read:userIDs');
-    },
-    updateProfile({atXavierAccount, permissions}, updateAccount) {
-      try {
-        if ((updateAccount === atXavierAccount)
-        && permissions.includes('write:userProfile')
-        || permissions.includes('write:anyUserProfile')) {
-          return true;
-        }
-      } catch {
-        return false;
+      const { atXavierAccount } = input;
+      const { authorization } = collection.context;
+      if (permit.updateProfile(authorization, atXavierAccount)) {
+        const { updateUser } = userMutation(input, collection);
+        return updateUser();
       }
     },
   },

@@ -1,5 +1,7 @@
 import express from 'express';
-import checkJwt from './_checkJwt';
+import jwtMiddleware from './_jwtMiddleware';
+
+const { checkJwt } = jwtMiddleware;
 
 export default function launchExpress(port) {
   let status = null;

@@ -2,7 +2,7 @@
 import { GraphQLScalarType } from 'graphql';
 import { Kind } from 'graphql/language';
 import resolve from './resolverConstructor';
-const { setCollection, mutation, query, permit } = resolve;
+const { setCollection, mutation, query } = resolve;
 
 export default {
   Query: {
@@ -33,20 +33,11 @@ export default {
     },
 
     loginUser(_, { input }, { dataSources }) {
-      const { authorization } = dataSources.users.context;
-      if (permit.queryLogin(authorization)) {
-        return mutation.loginUser(input, dataSources.users);
-      }
-      return;
+      return mutation.loginUser(input, dataSources.users);
     },
 
     updateUser(_, { input }, { dataSources }) {
-      const { atXavierAccount } = input;
-      const { authorization } = dataSources.users.context;
-      if (permit.updateProfile(authorization, atXavierAccount)) {
-        return mutation.updateUser(input, dataSources.users);
-      }
-      return;
+      return mutation.updateUser(input, dataSources.users);
     },
   },
 

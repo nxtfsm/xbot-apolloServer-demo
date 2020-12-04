@@ -1,6 +1,7 @@
 // ./index.js
 import 'dotenv/config';
-import Server, { launchExpress } from './src';
+import Server from './src';
+import { launchExpress } from './src/middleware';
 
 const config = {
   port: process.env.PORT,
