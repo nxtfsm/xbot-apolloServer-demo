@@ -15,10 +15,11 @@ export default async function(app, config) {
   const server = new ApolloServer({
     ...schema,
     dataSources: () => dataSources(databaseClient.getDB()),
-    context: ({ req }) => {
-      validateToken(req);
-
-      const authorization = req.headers.authorization || '';
+    context: async({ req }) => {
+      const authorization = { level: 'public' };
+      await validateToken(req)
+        .then((res) => { if (res) Object.assign(authorization, res); })
+        .catch((err) => console.error(err));
       return { authorization };
     },
   });

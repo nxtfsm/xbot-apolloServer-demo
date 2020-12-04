@@ -6,7 +6,7 @@ export default function launchExpress(port) {
   try {
     const app = express();
     app.use((checkJwt).unless({ path: ['/graphql' ] }));
-    app.get('/private', checkJwt, function(req, res) {
+    app.get('/private_test', checkJwt, function(req, res) {
       res.json({
         user: req.user.sub,
         message: 'in a private endpoint',

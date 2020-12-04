@@ -36,7 +36,7 @@ export default {
       return mutation.loginUser(input, dataSources.users);
     },
     updateUser(_, { input }, { dataSources }) {
-      // console.log(dataSources.users.context.authorization)
+      console.log(dataSources.users.context.authorization);
       return mutation.updateUser(input, dataSources.users);
     },
   },

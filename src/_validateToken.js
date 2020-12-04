@@ -1,7 +1,7 @@
 import jwt from 'jsonWebToken';
-const jwksClient = require('jwks-rsa');
+import jwksRsa from 'jwks-rsa';
 
-const client = jwksClient({
+const client = jwksRsa({
   cache: true,
   cacheMaxEntries: 5,
   cacheMaxAge: 600000,
@@ -9,6 +9,12 @@ const client = jwksClient({
   jwksRequestsPerMinute: 5,
   jwksUri: 'https://dev-r0qdxyeq.us.auth0.com/.well-known/jwks.json',
 });
+
+const options = {
+  algorithm: 'RS256',
+  audience: 'https://xbotdemo/api',
+  issuer: 'https://dev-r0qdxyeq.us.auth0.com/',
+};
 
 function getKey(header, callback) {
   client.getSigningKey(header.kid, function(err, key) {
@@ -19,22 +25,23 @@ function getKey(header, callback) {
 }
 
 export default function validateToken(request) {
-  const authorize = { level: 'public' };
-  try {
-    if (request.headers.authorization) {
-      const header = request.headers.authorization;
-      const token = header.split(' ')[1];
-      const options = { algorithm: 'RS256' };
+  return new Promise((resolve, reject) => {
+    if (!request.headers.authorization) resolve(false);
 
-      jwt.verify(token, getKey, options, (err, {sub, permissions}) => {
-        if (err) throw new Error;
-        authorize.atXavierAccount = sub.slice(sub.indexOf('|') + 1) || sub;
-        authorize.permissions = permissions;
-      });
-    }
-  } catch (error) {
-    console.error(error);
-  } finally {
-    return authorize;
-  }
-}
+    const header = request.headers.authorization;
+    const token = header.split(' ')[1];
+    jwt.verify(token, getKey, options, (err, decoded) => {
+
+      if (err) return reject(err);
+
+      const { sub, permissions } = decoded;
+      const authorize = {
+        atXavierAccount: sub.slice(sub.indexOf('|') + 1) || sub,
+        level: permissions.includes('write:any') ? 'super' : 'user',
+        permissions: permissions,
+      };
+
+      resolve(authorize);
+    });
+  });
+};
