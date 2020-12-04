@@ -32,11 +32,10 @@ export default {
     },
 
     loginUser(_, { input }, { dataSources }) {
-
       return mutation.loginUser(input, dataSources.users);
     },
     updateUser(_, { input }, { dataSources }) {
-      console.log(dataSources.users.context.authorization);
+      console.dir(dataSources.users.context.authorization);
       return mutation.updateUser(input, dataSources.users);
     },
   },
