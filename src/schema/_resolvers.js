@@ -2,11 +2,12 @@
 import { GraphQLScalarType } from 'graphql';
 import { Kind } from 'graphql/language';
 import resolve from './resolverConstructor';
-const { setCollection, mutation, query } = resolve;
+const { setCollection, mutation, query, permit } = resolve;
 
 export default {
   Query: {
     tutorials(_, { input }, { dataSources }) {
+      console.dir(dataSources.users.context.authorization);
       const { key, collection } = setCollection(input, dataSources);
       return {
         collection: key,
@@ -32,11 +33,20 @@ export default {
     },
 
     loginUser(_, { input }, { dataSources }) {
-      return mutation.loginUser(input, dataSources.users);
+      const { authorization } = dataSources.users.context;
+      if (permit.queryLogin(authorization)) {
+        return mutation.loginUser(input, dataSources.users);
+      }
+      return;
     },
+
     updateUser(_, { input }, { dataSources }) {
-      console.dir(dataSources.users.context.authorization);
-      return mutation.updateUser(input, dataSources.users);
+      const { atXavierAccount } = input;
+      const { authorization } = dataSources.users.context;
+      if (permit.updateProfile(authorization, atXavierAccount)) {
+        return mutation.updateUser(input, dataSources.users);
+      }
+      return;
     },
   },
 
