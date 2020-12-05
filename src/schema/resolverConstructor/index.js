@@ -5,10 +5,8 @@ import query from './_queryConstructor';
 import permit from './_permissionChecks';
 
 export default {
-  setCollection(input, dataSources) {
-    const key = input.internalOrigin
-      ? 'internalArticles'
-      : 'externalArticles';
+  setCollection({ internalOrigin }, dataSources) {
+    const key = internalOrigin ? 'internalArticles' : 'externalArticles';
     return { key, collection: dataSources[key] };
   },
   query: {

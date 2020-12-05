@@ -4,8 +4,20 @@ import { gql } from 'apollo-server-express';
 export default gql`
 type Query {
   tutorials(
-    input: ArticleInput
-  ): TutorialsQueryPayload!
+    input: TutorialsQueryInput
+  ): TutorialsQueryConnection!
+}
+
+input TutorialsQueryInput {
+  pageSize: Int
+  after: Int
+  articleQuery: ArticleInput
+}
+
+type TutorialsQueryConnection {
+  cursor: String
+  hasMore: Boolean
+  payload: TutorialsQueryPayload!
 }
 
 type TutorialsQueryPayload {

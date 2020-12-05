@@ -3,7 +3,10 @@ import { MongoDataSource } from 'apollo-datasource-mongodb';
 
 export default class Articles extends MongoDataSource {
   async getAll(query, opts = {}) {
-    return await this.collection.find(query, opts).toArray();
+    return {
+      articles: await this.collection.find(query, opts).toArray(),
+      estCount: await this.collection.estimatedDocumentCount(),
+    };
   }
 
   async createNew(doc, opts = {}) {

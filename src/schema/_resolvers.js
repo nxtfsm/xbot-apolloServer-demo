@@ -6,12 +6,18 @@ const { setCollection, mutation, query } = resolve;
 
 export default {
   Query: {
-    tutorials(_, { input }, { dataSources }) {
-      console.dir(dataSources.users.context.authorization);
-      const { key, collection } = setCollection(input, dataSources);
+    async tutorials(_, { input }, { dataSources }) {
+      const { articleQuery } = input;
+      const { key, collection } = setCollection(articleQuery, dataSources);
+      const results = await query.tutorials(input, collection);
+      const { articles, cursor, hasMore } = results;
       return {
-        collection: key,
-        articles: query.tutorials(input, collection),
+        cursor,
+        hasMore,
+        payload: {
+          articles,
+          collection: key,
+        },
       };
     },
   },
