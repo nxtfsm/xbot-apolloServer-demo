@@ -3,7 +3,7 @@ import inputReducer from './_inputReducer';
 
 export default query;
 
-function query({ articleQuery, pageSize = 10, after = 0, }, collection) {
+function query({ articleQuery, pageSize = 10, after = 0 }, collection) {
   return {
     async getTutorials() {
       const args = inputReducer(articleQuery);
