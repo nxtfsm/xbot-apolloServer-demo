@@ -1,0 +1,93 @@
+[
+  {
+    "title":"Modern JavaScript – Imports, Exports, Let, Const, and Promises in ES6+",
+    "shortTitle":"ES6+ Updates",
+    "externalUrl":"https://www.freecodecamp.org/news/learn-modern-javascript/",
+    "summary":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque massa placerat duis ultricies lacus sed turpis tincidunt id. Consectetur purus ut faucibus pulvinar.",
+    "source":"Free Code Camp"
+  },
+  {
+    "title":"5 JavaScript Tips That'll Help You Save Time",
+    "shortTitle":"JS Time-Savers",
+    "externalUrl":"https://www.freecodecamp.org/news/time-saving-javascript-tips/",
+    "summary":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque massa placerat duis ultricies lacus sed turpis tincidunt id. Consectetur purus ut faucibus pulvinar.",
+    "source":"Free Code Camp"
+  },
+  {
+    "title":"Learn JavaScript Promises and Async/Await in 20 Minutes",
+    "shortTitle":"Promises & Async/Await",
+    "externalUrl":"https://www.freecodecamp.org/news/learn-promise-async-await-in-20-minutes/",
+    "summary":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque massa placerat duis ultricies lacus sed turpis tincidunt id. Consectetur purus ut faucibus pulvinar.",
+    "source":"Free Code Camp"
+  },
+  {
+    "title":"HTML Center Text – How to CSS Vertical Align a Div",
+    "shortTitle":"CSS Vertical Align",
+    "externalUrl":"https://www.freecodecamp.org/news/html-center-text-how-to-css-vertical-align-a-div/",
+    "summary":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque massa placerat duis ultricies lacus sed turpis tincidunt id. Consectetur purus ut faucibus pulvinar.",
+    "source":"Free Code Camp"
+  },
+  {
+    "title":"Introducing Sass Modules",
+    "shortTitle":"Introducing Sass Modules",
+    "externalUrl":"https://css-tricks.com/introducing-sass-modules/",
+    "summary":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque massa placerat duis ultricies lacus sed turpis tincidunt id. Consectetur purus ut faucibus pulvinar.",
+    "source":"CSS-Tricks"
+  },
+  {
+    "title":"Flexbox vs Grid - How to Build the Most Common HTML Layouts",
+    "shortTitle":"Flexbox vs Grid",
+    "externalUrl":"https://www.freecodecamp.org/news/flexbox-vs-grid-how-to-build-the-most-common-html-layouts/",
+    "summary":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque massa placerat duis ultricies lacus sed turpis tincidunt id. Consectetur purus ut faucibus pulvinar.",
+    "source":"Free Code Camp"
+  },
+  {
+    "title":"Learn React in 30 Minutes",
+    "shortTitle":"Learn React in 30 Minutes",
+    "externalUrl":"https://www.youtube.com/watch?v=hQAHSlTtcmY",
+    "summary":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque massa placerat duis ultricies lacus sed turpis tincidunt id. Consectetur purus ut faucibus pulvinar.",
+    "source":"Web Dev Simplified (YouTube)"
+  },
+  {
+    "title":"MIT Intro to CS & Python: Object Oriented Programming",
+    "shortTitle":"MIT Python: OOP",
+    "externalUrl":"https://www.youtube.com/watch?v=-DP1i2ZU9gk",
+    "summary":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque massa placerat duis ultricies lacus sed turpis tincidunt id. Consectetur purus ut faucibus pulvinar.",
+    "source":"MIT OpenCourseWare (YouTube)"
+  },
+  {
+    "title":"How to Scrape Websites with Python",
+    "shortTitle":"How to Scrape Websites with Python",
+    "externalUrl":"https://www.freecodecamp.org/news/how-to-scrape-websites-with-python/",
+    "summary":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque massa placerat duis ultricies lacus sed turpis tincidunt id. Consectetur purus ut faucibus pulvinar.",
+    "source":"Free Code Camp"
+  },
+  {
+    "title":"Python While Loop – While True Syntax Examples and Infinite Loops",
+    "shortTitle":"Python While Loops",
+    "externalUrl":"https://www.freecodecamp.org/news/python-while-loop-tutorial/",
+    "summary":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque massa placerat duis ultricies lacus sed turpis tincidunt id. Consectetur purus ut faucibus pulvinar.",
+    "source":"Free Code Camp"
+  },
+  {
+    "title":"How Modular Programming Works in Node.js",
+    "shortTitle":"Modular Programming in Node.js",
+    "externalUrl":"https://www.freecodecamp.org/news/modular-programming-nodejs-npm-modules/",
+    "summary":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque massa placerat duis ultricies lacus sed turpis tincidunt id. Consectetur purus ut faucibus pulvinar.",
+    "source":"Free Code Camp"
+  },
+  {
+    "title":"Learn DOM Manipulation In 18 Minutes",
+    "shortTitle":"Learn DOM Manipulation In 18 Minutes",
+    "externalUrl":"https://www.youtube.com/watch?v=y17RuWkWdn8",
+    "summary":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque massa placerat duis ultricies lacus sed turpis tincidunt id. Consectetur purus ut faucibus pulvinar.",
+    "source":"Web Dev Simplified (YouTube)"
+  },
+  {
+    "title":"Node.js Ultimate Beginner’s Guide in 7 Easy Steps",
+    "shortTitle":"Node.js in 7 Easy Steps",
+    "externalUrl":"https://www.youtube.com/watch?v=ENrzD9HAZK4",
+    "summary":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque massa placerat duis ultricies lacus sed turpis tincidunt id. Consectetur purus ut faucibus pulvinar.",
+    "source":"Fireship (YouTube)"
+  }
+]

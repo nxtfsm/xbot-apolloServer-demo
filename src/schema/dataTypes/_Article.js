@@ -10,6 +10,7 @@ export default gql`
     externalUrl: String
     summary: String
     content: String
+    source: String
     tags: [ContentTag]
     postedBy: User
   }
@@ -26,6 +27,7 @@ export default gql`
     externalUrl: String
     summary: String
     content: String
+    source: String
     tags: [ID]
     postedBy: ID
   }
@@ -37,6 +39,7 @@ export default gql`
     externalUrl: String
     summary: String
     content: String
+    source: String
     tags: [ID]
     modifiedBy: ID
   }
