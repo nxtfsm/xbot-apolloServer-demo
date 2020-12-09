@@ -10,15 +10,7 @@ export default {
       const { articleQuery } = input;
       const { key, collection } = setCollection(articleQuery, dataSources);
       const results = await query.tutorials(input, collection);
-      const { articles, cursor, hasMore } = results;
-      return {
-        cursor,
-        hasMore,
-        payload: {
-          articles,
-          collection: key,
-        },
-      };
+      return { ...results, collection: key };
     },
   },
 

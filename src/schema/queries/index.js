@@ -17,10 +17,6 @@ input TutorialsQueryInput {
 type TutorialsQueryConnection {
   cursor: Int
   hasMore: Boolean
-  payload: TutorialsQueryPayload!
-}
-
-type TutorialsQueryPayload {
   collection: String
   articles: [Article]
 }

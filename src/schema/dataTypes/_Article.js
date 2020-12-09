@@ -15,10 +15,6 @@ export default gql`
     postedBy: User
   }
 
-  type UpdatedArticlePayload {
-    articles: [Article]
-  }
-
   input ArticleInput {
     internalOrigin: Boolean!
     refTitle: String
