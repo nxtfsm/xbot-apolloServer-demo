@@ -7,5 +7,6 @@ export default gql`
     message: String
     updatedArticle: Article
     updatedUser: User
+    updatedCodePen: CodePen
   }
 `;

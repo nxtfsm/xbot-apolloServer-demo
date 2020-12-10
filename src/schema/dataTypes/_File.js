@@ -7,4 +7,10 @@ export default gql`
     mimetype: String!
     encoding: String!
   }
+
+  input FileInput {
+    filename: String!
+    mimetype: String!
+    encoding: String!
+  }
 `;

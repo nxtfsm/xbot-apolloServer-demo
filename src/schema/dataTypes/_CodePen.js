@@ -5,6 +5,7 @@ export default gql`
   type CodePen {
     _id: ID!
     title: String
+    summary: String
     description: String
     data: CodePenData
     tags: [ContentTag]
@@ -17,5 +18,22 @@ export default gql`
     html: String
     js: String
     css: String
+  }
+
+  input CodePenDataInput {
+    html: String
+    js: String
+    css: String
+  }
+
+  input CodePenInput {
+    collectionName: String
+    title: String
+    summary: String
+    description: String
+    tags: [TagInput]
+    preview: FileInput
+    postedBy: ID
+    updatedAt: Date
   }
 `;

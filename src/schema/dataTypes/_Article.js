@@ -16,7 +16,7 @@ export default gql`
   }
 
   input ArticleInput {
-    internalOrigin: Boolean!
+    collectionName: String
     refTitle: String
     title: String
     shortTitle: String

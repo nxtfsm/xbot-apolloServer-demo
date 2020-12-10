@@ -1,31 +1,43 @@
 // ./src/schema/resolverConstructor/index.js
+import codePenMutation from './_codePenMutations';
+import permit from './_permissionChecks';
+import query from './_queryConstructor';
 import tutorialMutation from './_tutorialMutations';
 import userMutation from './_userMutations';
-import query from './_queryConstructor';
-import permit from './_permissionChecks';
+
+const mutations = {
+  codePens: codePenMutation,
+  internalTutorials: tutorialMutation,
+  externalTutorials: tutorialMutation,
+};
 
 export default {
-  setCollection({ internalOrigin }, dataSources) {
-    const key = internalOrigin ? 'internalArticles' : 'externalArticles';
-    return { key, collection: dataSources[key] };
-  },
   query: {
     tutorials(input, collection) {
-      const { getTutorials } = query(input, collection);
+      const queryInput = { ...input, query: input.articleQuery || {} };
+      const { getTutorials } = query(queryInput, collection);
       return getTutorials();
+    },
+    codePens(input, collection) {
+      const queryInput = { ...input, query: input.codePenQuery || {} };
+      const { getCodePens } = query(queryInput, collection);
+      return getCodePens();
     },
   },
   mutation: {
     createOne(input, collection) {
-      const { create } = tutorialMutation(input, collection);
+      const mutation = mutations[input.collectionName];
+      const { create } = mutation(input, collection);
       return create();
     },
     updateOne(input, collection, newValues) {
-      const { update } = tutorialMutation(input, collection, newValues);
+      const mutation = mutations[input.collectionName];
+      const { update } = mutation(input, collection, newValues);
       return update();
     },
     deleteOne(input, collection) {
-      const { deleteOne } = tutorialMutation(input, collection);
+      const mutation = mutations[input.collectionName];
+      const { deleteOne } = mutation(input, collection);
       return deleteOne();
     },
     loginUser(input, collection) {

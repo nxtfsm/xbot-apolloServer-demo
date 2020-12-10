@@ -2,32 +2,33 @@
 import { GraphQLScalarType } from 'graphql';
 import { Kind } from 'graphql/language';
 import resolve from './resolverConstructor';
-const { setCollection, mutation, query } = resolve;
+const { mutation, query } = resolve;
 
 export default {
   Query: {
     async tutorials(_, { input }, { dataSources }) {
-      const { articleQuery } = input;
-      const { key, collection } = setCollection(articleQuery, dataSources);
-      const results = await query.tutorials(input, collection);
-      return { ...results, collection: key };
+      return await query.tutorials(input, dataSources[input.collectionName]);
+    },
+    async codePens(_, { input }, { dataSources }) {
+      return await query.codePens(input, dataSources[input.collectionName]);
     },
   },
 
   Mutation: {
+    createCodePen(_, { input }, { dataSources }) {
+      return mutation.createOne(input, dataSources[input.collectionName]);
+    },
     createTutorial(_, { input }, { dataSources }) {
-      const { collection } = setCollection(input, dataSources);
-      return mutation.createOne(input, collection);
+      return mutation.createOne(input, dataSources[input.collectionName]);
     },
 
     updateTutorial(_, { input, newValues }, { dataSources }) {
-      const { collection } = setCollection(input, dataSources);
-      return mutation.updateOne(input, collection, newValues);
+      return mutation
+        .updateOne(input, dataSources[input.collectionName], newValues);
     },
 
     deleteTutorial(_, { input }, { dataSources }) {
-      const { collection } = setCollection(input, dataSources);
-      return mutation.deleteOne(input, collection);
+      return mutation.deleteOne(input, dataSources[input.collectionName]);
     },
 
     loginUser(_, { input }, { dataSources }) {

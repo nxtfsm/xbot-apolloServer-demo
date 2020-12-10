@@ -3,7 +3,7 @@ import inputReducer from './_inputReducer';
 
 export default function(input, inCollection, newValues = {}) {
   const args = inputReducer(input);
-  const doc = { $set: { ...newValues} };
+  const doc = { $set: { ...newValues } };
 
   const errorStr = (err = {}) => `dataSource interface error: ${err}`;
 
