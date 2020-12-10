@@ -9,8 +9,12 @@ export default gql`
   }
 
   input FileInput {
-    filename: String!
-    mimetype: String!
-    encoding: String!
+    file: Upload!
   }
 `;
+
+/* input FileInput {
+  filename: String!
+  mimetype: String!
+  encoding: String!
+}*/

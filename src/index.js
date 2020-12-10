@@ -1,6 +1,7 @@
 // ./src/index.js
 import { ApolloServer } from 'apollo-server-express';
 // import bulkImporter from './bulkImporter';
+// import { addCodePen } from './bulkImporter';
 import databaseClient from './databaseClient';
 import dataSources from './dataSources';
 import logger from './__debugger__';
@@ -33,6 +34,7 @@ export default async function Server(app, config) {
         debugging ? logger({info: res}) : logger();
         logger(activeMsg);
         // bulkImporter(port)
+        // addCodePen(port)
       })
       .catch((rej) => {
         logger({err: rej});
