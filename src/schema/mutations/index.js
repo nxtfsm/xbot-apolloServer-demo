@@ -7,6 +7,15 @@ export default gql`
       input: CodePenInput!
     ): UpdateResponse
 
+    updateCodePen(
+      input: CodePenInput!
+      newValues: CodePenInput
+    ): UpdateResponse
+
+    deleteCodePen(
+      input: CodePenInput!
+    ): UpdateResponse
+
     createTutorial(
       input: ArticleInput!
     ): UpdateResponse

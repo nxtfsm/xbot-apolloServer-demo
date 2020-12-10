@@ -25,7 +25,7 @@ export default function(input, collection) {
     },
     async updateUser() {
       const query = { atXavierAccount: input.atXavierAccount };
-      const update = {$set: { ...args } };
+      const update = { $set: { ...args } };
       const response = await collection.updateUser(query, update);
       return {
         successStatus: !!response,
