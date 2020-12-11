@@ -1,5 +1,8 @@
 // ./src/schema/_resolvers.js
+import { join } from 'path';
+import { createWriteStream } from 'fs';
 import { GraphQLScalarType } from 'graphql';
+import { GraphQLUpload } from 'graphql-upload';
 import { Kind } from 'graphql/language';
 import resolve from './resolverConstructor';
 const {
@@ -8,6 +11,7 @@ const {
 } = resolve;
 
 export default {
+  Upload: GraphQLUpload,
   Query: {
     async tutorials(_, { input }, { dataSources }) {
       return await tutorials(input, dataSources[input.collectionName]);
@@ -18,6 +22,19 @@ export default {
   },
 
   Mutation: {
+    singleUpload(parent, args) {
+      return args.file.then(file => {
+        const { createReadStream, filename, mimetype, encoding } = file;
+        const stream = createReadStream();
+        const pathName = join(__dirname, `../../testUploads/${filename}`);
+        stream.pipe(createWriteStream(pathName));
+        return {
+          filename,
+          mimetype,
+          encoding,
+        };
+      });
+    },
     createCodePen(_, { input }, { dataSources }) {
       return createOne(input, dataSources[input.collectionName]);
     },

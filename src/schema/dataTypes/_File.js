@@ -8,10 +8,17 @@ export default gql`
     encoding: String!
   }
 
-  input FileInput {
-    file: Upload!
+input FileInput {
+    filename: String!
+    mimetype: String!
+    encoding: String!
   }
 `;
+
+/* input FileInput {
+  upload: Upload!
+
+}*/
 
 /* input FileInput {
   filename: String!

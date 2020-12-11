@@ -19,7 +19,22 @@ mutation createCodePen($input: CodePenInput!) {
       _id
       title
       summary
+      preview {
+        filename
+        mimetype
+        encoding
+      }
     }
+  }
+}
+`;
+
+const UPLOAD_FILE = gql`
+mutation singleUpload($file: Upload!) {
+  singleUpload(file: $file) {
+    filename
+    mimetype
+    encoding
   }
 }
 `;
@@ -30,18 +45,31 @@ const queries = {
   externalTutorials: ADD_ARTICLE,
 };
 
-export function addCodePen(port) {
+export async function fileUpload(port) {
+  const endpoint = `http://localhost:${port}/graphql`;
+  const file = '../bulkImports/testPenThumbnail.png';
+
+  axios.post(endpoint, {
+    query: print(UPLOAD_FILE),
+    variables: { file } })
+    .then(res => console.dir(res.data))
+    .catch(err => console.error(err));
+}
+
+/* export function addCodePen(port) {
   const endpoint = `http://localhost:${port}/graphql`;
   const input = {
     collectionName: 'codePens',
     title: 'Axios Code Pen',
     summary: 'From Axios',
     preview: {
-      file: './bulkImports/testPenThumbnail.png',
+      filename: './bulkImports/testPenThumbnail.png',
+      mimetype: 'image/png',
+      encoding: 'utf-8',
     },
   };
 
-  try {
+/* try {
     axios.post(endpoint, {
       query: print(ADD_CODEPEN),
       variables: { input },
@@ -51,7 +79,7 @@ export function addCodePen(port) {
   } catch (err) {
     console.error(err);
   }
-}
+}*/
 
 
 export default function bulkImporter(port, collectionName) {

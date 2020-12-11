@@ -16,6 +16,10 @@ export default gql`
   }
 
   input ArticleInput {
+    """
+    Target DataSources Collection for Record:
+    Expects 'internalTutorials' or 'externalTutorials'.
+    """
     collectionName: String
     refTitle: String
     title: String

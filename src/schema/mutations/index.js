@@ -3,6 +3,8 @@ import { gql } from 'apollo-server-express';
 
 export default gql`
   type Mutation {
+    singleUpload(file: Upload!): File!
+
     createCodePen(
       input: CodePenInput!
     ): UpdateResponse

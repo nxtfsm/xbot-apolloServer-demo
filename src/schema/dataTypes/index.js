@@ -16,4 +16,5 @@ export default gql`
     ${File}
     ${User}
     ${UpdateResponse}
+    scalar Upload
 `;

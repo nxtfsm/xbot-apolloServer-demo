@@ -32,6 +32,7 @@ export default gql`
     summary: String
     description: String
     tags: [TagInput]
+    file: Upload
     preview: FileInput
     postedBy: ID
     updatedAt: Date

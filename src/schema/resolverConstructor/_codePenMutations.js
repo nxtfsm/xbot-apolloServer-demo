@@ -8,6 +8,7 @@ export default function(input, inCollection, newValues = {}) {
 
   return {
     create() {
+      console.dir(args.preview);
       const response = inCollection.createNew(args);
       return {
         successStatus: !!response,
